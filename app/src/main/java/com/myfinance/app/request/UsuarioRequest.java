@@ -1,4 +1,4 @@
-package request;
+package com.myfinance.app.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

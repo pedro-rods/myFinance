@@ -1,4 +1,4 @@
-package mapper;
+package com.myfinance.app.mapper;
 
 import java.util.List;
 
@@ -6,9 +6,9 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.data.domain.Page;
 
-import entity.Usuario;
-import request.UsuarioRequest;
-import response.UsuarioResponse;
+import com.myfinance.app.entitiy.Usuario;
+import com.myfinance.app.request.UsuarioRequest;
+import com.myfinance.app.response.UsuarioResponse;
 
 @Mapper(componentModel = "spring")
 public interface UsuarioMapper {

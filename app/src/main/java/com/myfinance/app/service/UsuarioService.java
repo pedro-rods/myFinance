@@ -1,17 +1,21 @@
-package service;
+package com.myfinance.app.service;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
-import entity.Usuario;
-import exception.RunTimeExceptionHandler;
+import com.myfinance.app.entitiy.Usuario;
+import com.myfinance.app.exception.RunTimeExceptionHandler;
+import com.myfinance.app.repository.UsuarioRepository;
+import com.myfinance.app.request.UsuarioRequest;
+import com.myfinance.app.response.UsuarioResponse;
+
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
-import repository.UsuarioRepository;
-import response.UsuarioResponse;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 @Transactional
 public class UsuarioService {
@@ -52,7 +56,23 @@ public class UsuarioService {
 	}
 
 	public Page<UsuarioResponse> buscarTodosPorNome(String nome, int page, int size) {
-		
+
 		return null;
+	}
+
+	public UsuarioResponse toResponse(Usuario usuario) {
+		UsuarioResponse response = new UsuarioResponse();
+		response.setId(usuario.getId());
+		response.setNome(usuario.getNome());
+		response.setEmail(usuario.getEmail());
+		return response;
+	}
+
+	public Usuario toEntity(UsuarioRequest request) {
+		Usuario usuario = new Usuario();
+		usuario.setNome(request.getNome());
+		usuario.setEmail(request.getEmail());
+		usuario.setSenha(request.getSenha());
+		return usuario;
 	}
 }

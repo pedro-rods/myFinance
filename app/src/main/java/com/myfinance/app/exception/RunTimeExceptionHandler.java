@@ -1,4 +1,4 @@
-package exception;
+package com.myfinance.app.exception;
 
 public class RunTimeExceptionHandler extends RuntimeException {
 	private static final long serialVersionUID = 1L;

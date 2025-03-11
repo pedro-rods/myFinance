@@ -1,4 +1,4 @@
-package exception;
+package com.myfinance.app.exception;
 
 import java.io.IOException;
 import java.time.Instant;

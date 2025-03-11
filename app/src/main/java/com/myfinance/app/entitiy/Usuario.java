@@ -1,4 +1,4 @@
-package entity;
+package com.myfinance.app.entitiy;
 
 import java.io.Serializable;
 

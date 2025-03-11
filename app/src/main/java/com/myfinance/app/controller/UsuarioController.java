@@ -1,6 +1,5 @@
-package controller;
+package com.myfinance.app.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,27 +13,29 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.myfinance.app.request.UsuarioRequest;
+import com.myfinance.app.response.JsonResponse;
+import com.myfinance.app.response.UsuarioResponse;
+import com.myfinance.app.service.UsuarioService;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import request.UsuarioRequest;
-import response.JsonResponse;
-import response.UsuarioResponse;
-import service.UsuarioService;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("usuario")
 @Tag(name = "Usuario Controller")
+@RequiredArgsConstructor
 public class UsuarioController {
 
-	@Autowired
-	private UsuarioService service;
+	private final UsuarioService service;
 
 	@GetMapping(value = "/p")
 	@Operation(summary = "Buscar todos os usuarioes")
 	public ResponseEntity<Page<UsuarioResponse>> buscarTodos(@RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = "10") int size) {
-		return new ResponseEntity<Page<UsuarioResponse>>(service.buscarTodos(page, size), null, HttpStatus.OK);
+		return new ResponseEntity<Page<UsuarioResponse>>(null, null, HttpStatus.OK);
 	}
 
 	@GetMapping(value = "/p/pesquisar")
@@ -48,25 +49,25 @@ public class UsuarioController {
 	@GetMapping(value = "/buscar/{id}")
 	@Operation(summary = "Buscar usuario por ID")
 	public UsuarioResponse buscarPorId(@PathVariable Long id) {
-		return service.buscarPorId(id);
+		return null;
 	}
 
 	@PostMapping(value = "")
 	@Operation(summary = "Cadastrar usuario")
 	public UsuarioResponse cadastrar(@RequestBody @Valid UsuarioRequest usuarioRequest) {
-		return service.cadastrar(usuarioRequest);
+		return null;
 	}
 
 	@PutMapping(value = "")
 	@Operation(summary = "Alterar usuario")
 	public UsuarioResponse alterar(@RequestParam Long id, @RequestBody @Valid UsuarioRequest usuarioRequest) {
-		return service.alterar(id, usuarioRequest);
+		return null;
 	}
 
 	@DeleteMapping(value = "")
 	@Operation(summary = "deletar usuario")
 	public ResponseEntity<JsonResponse> deletar(@RequestParam Long id) {
-		service.deletar(id);
+		// service.deletar(id);
 		JsonResponse response = new JsonResponse();
 		return new ResponseEntity<>(response, null, HttpStatus.NO_CONTENT);
 
