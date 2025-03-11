@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.myfinance.app.entitiy.Usuario;
 import com.myfinance.app.exception.RunTimeExceptionHandler;
+import com.myfinance.app.mapper.UsuarioMapper;
 import com.myfinance.app.repository.UsuarioRepository;
 import com.myfinance.app.request.UsuarioRequest;
 import com.myfinance.app.response.UsuarioResponse;
@@ -22,6 +23,9 @@ public class UsuarioService {
 
 	@Autowired
 	private UsuarioRepository repository;
+
+	@Autowired
+	private UsuarioMapper mapper;
 
 	public Usuario buscarPorid(Long id) {
 		return repository.findById(id).orElse(null);
@@ -60,19 +64,5 @@ public class UsuarioService {
 		return null;
 	}
 
-	public UsuarioResponse toResponse(Usuario usuario) {
-		UsuarioResponse response = new UsuarioResponse();
-		response.setId(usuario.getId());
-		response.setNome(usuario.getNome());
-		response.setEmail(usuario.getEmail());
-		return response;
-	}
 
-	public Usuario toEntity(UsuarioRequest request) {
-		Usuario usuario = new Usuario();
-		usuario.setNome(request.getNome());
-		usuario.setEmail(request.getEmail());
-		usuario.setSenha(request.getSenha());
-		return usuario;
-	}
 }
