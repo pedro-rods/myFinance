@@ -32,14 +32,14 @@ public class UsuarioController {
 	private final UsuarioService service;
 
 	@GetMapping(value = "/p")
-	@Operation(summary = "Buscar todos os usuarioes")
+	@Operation(summary = "Buscar todos os usuarios")
 	public ResponseEntity<Page<UsuarioResponse>> buscarTodos(@RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = "10") int size) {
 		return new ResponseEntity<Page<UsuarioResponse>>(null, null, HttpStatus.OK);
 	}
 
 	@GetMapping(value = "/p/pesquisar")
-	@Operation(summary = "Buscar todos usuarioes pelo nome")
+	@Operation(summary = "Buscar todos usuarios pelo nome")
 	public ResponseEntity<Page<UsuarioResponse>> buscarTodosPorNome(@RequestParam(value = "nome") String nome,
 			@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
 		return new ResponseEntity<Page<UsuarioResponse>>(service.buscarTodosPorNome(nome, page, size), null,
@@ -48,26 +48,32 @@ public class UsuarioController {
 
 	@GetMapping(value = "/buscar/{id}")
 	@Operation(summary = "Buscar usuario por ID")
-	public UsuarioResponse buscarPorId(@PathVariable Long id) {
-		return null;
+	public ResponseEntity<UsuarioResponse> buscarPorId(@PathVariable Long id) {
+
+		return new ResponseEntity<>(service.buscarPorid(id), null, HttpStatus.OK);
 	}
 
 	@PostMapping(value = "")
 	@Operation(summary = "Cadastrar usuario")
-	public UsuarioResponse cadastrar(@RequestBody @Valid UsuarioRequest usuarioRequest) {
-		return null;
+	public ResponseEntity<JsonResponse> cadastrar(@RequestBody @Valid UsuarioRequest request) {
+		service.cadastrar(request);
+		JsonResponse response = new JsonResponse();
+		return new ResponseEntity<>(response, null, HttpStatus.OK);
 	}
 
 	@PutMapping(value = "")
 	@Operation(summary = "Alterar usuario")
-	public UsuarioResponse alterar(@RequestParam Long id, @RequestBody @Valid UsuarioRequest usuarioRequest) {
-		return null;
+	public ResponseEntity<JsonResponse> alterar(@RequestParam Long id, @RequestBody @Valid UsuarioRequest request) {
+
+		JsonResponse response = new JsonResponse();
+		response.setMessage("método ainda não implementado");
+		return new ResponseEntity<>(response, null, HttpStatus.NO_CONTENT);
 	}
 
 	@DeleteMapping(value = "")
 	@Operation(summary = "deletar usuario")
 	public ResponseEntity<JsonResponse> deletar(@RequestParam Long id) {
-		// service.deletar(id);
+		service.deletar(id);
 		JsonResponse response = new JsonResponse();
 		return new ResponseEntity<>(response, null, HttpStatus.NO_CONTENT);
 

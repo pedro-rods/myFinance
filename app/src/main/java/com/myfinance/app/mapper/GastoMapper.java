@@ -7,23 +7,23 @@ import org.mapstruct.Mapping;
 import org.springframework.data.domain.Page;
 
 import com.myfinance.app.entitiy.Gasto;
-import com.myfinance.app.request.GastosRequest;
-import com.myfinance.app.response.GastosResponse;
+import com.myfinance.app.request.GastoRequest;
+import com.myfinance.app.response.GastoResponse;
 
 @Mapper(componentModel = "spring")
 public interface GastoMapper {
 
 	@Mapping(source = "usuario.id", target = "idUsuario")
-	GastosResponse toGastosResponse(Gasto gastos);
+	GastoResponse toGastosResponse(Gasto gastos);
 
-	default Page<GastosResponse> toPageGastosResponse(Page<Gasto> page) {
+	default Page<GastoResponse> toPageGastosResponse(Page<Gasto> page) {
 		return page.map(this::toGastosResponse);
 	}
 
 	@Mapping(target = "id", ignore = true)
 	@Mapping(target = "usuario", ignore = true)
-	Gasto toGastosEntity(GastosRequest gastosRequest);
+	Gasto toGastosEntity(GastoRequest gastosRequest);
 
-	List<GastosResponse> toListGastosResponse(List<Gasto> list);
+	List<GastoResponse> toListGastosResponse(List<Gasto> list);
 
 }

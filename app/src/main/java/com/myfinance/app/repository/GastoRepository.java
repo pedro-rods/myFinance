@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.myfinance.app.entitiy.Gasto;
+import com.myfinance.app.enums.EnumTipoCategoria;
 import com.myfinance.app.response.GastosAgrupadosResponse;
 
 @Repository
@@ -17,6 +18,6 @@ public interface GastoRepository extends JpaRepository<Gasto, Long> {
 
 	@Query("SELECT new com.myfinance.app.response.GastosAgrupadosResponse(g.subcategoria, SUM(g.valor)) FROM Gasto g "
 			+ "WHERE usuario.id = :id AND categoria = :categoria GROUP BY g.subcategoria")
-	List<GastosAgrupadosResponse> findTotalBySubcategoria(Long id, String categoria);
+	List<GastosAgrupadosResponse> findTotalBySubcategoria(Long id, EnumTipoCategoria categoria);
 
 }

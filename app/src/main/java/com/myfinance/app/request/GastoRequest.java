@@ -14,24 +14,22 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class GastosRequest {
+public class GastoRequest {
 
 	@NotNull(message = "IdUsuario vazio")
 	private Long idUsuario;
 
-	@NotNull(message = "Email é nulo")
+	@NotNull(message = "Valor é nulo")
 	private Double valor;
 
 	@NotBlank(message = "subcategoria vazia")
 	@NotNull(message = "subcategoria é nula")
 	private String subcategoria;
 
-	@NotBlank(message = "categoria vazia")
 	@NotNull(message = "categoria é nula")
 	private EnumTipoCategoria categoria;
 
-	@NotBlank(message = "categoria vazia")
-	@NotNull(message = "categoria é nula")
+	@NotNull(message = "dataHora é nula")
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm")
 	private Date dataHora;
 

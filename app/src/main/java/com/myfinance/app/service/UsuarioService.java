@@ -27,18 +27,19 @@ public class UsuarioService {
 	@Autowired
 	private UsuarioMapper mapper;
 
-	public Usuario buscarPorid(Long id) {
-		return repository.findById(id).orElse(null);
+	public UsuarioResponse buscarPorid(Long id) {
+		return mapper.toUsuarioResponse(repository.findById(id).orElse(null));
 	}
 
 	public Usuario buscarPorIdOuErro(Long id) {
 		return repository.findById(id).orElseThrow(() -> new RunTimeExceptionHandler("Usuario inexistente"));
 	}
 
-	public Usuario cadastrarUsuario(@Valid Usuario usuario) {
+	public void cadastrar(@Valid UsuarioRequest request) {
+		Usuario usuario = mapper.toUsuarioEntity(request);
 		Usuario obj = buscarPorEmail(usuario.getEmail());
 		if (obj == null) {
-			return repository.save(usuario);
+			repository.save(usuario);
 		} else {
 			throw new RunTimeExceptionHandler("Email já cadastrado");
 		}
@@ -48,21 +49,21 @@ public class UsuarioService {
 		return repository.buscarPorEmail(email);
 	}
 
-	public Usuario atualizarUsuario(Long id, Usuario usuarioNovo) {
+	public Usuario atualizarUsuario(Long id, UsuarioRequest request) {
+		Usuario usuarioNovo = mapper.toUsuarioEntity(request);
 		Usuario usuario = buscarPorIdOuErro(id);
-		BeanUtils.copyProperties(usuarioNovo, usuario, "id", "senha", "primeiroAcesso", "permissao");
+		BeanUtils.copyProperties(usuarioNovo, usuario, "id", "senha");
 		return repository.save(usuario);
 	}
 
-	public void deletarUsuario(Long id) {
+	public void deletar(Long id) {
 		repository.deleteById(id);
 
 	}
 
 	public Page<UsuarioResponse> buscarTodosPorNome(String nome, int page, int size) {
-
+		
 		return null;
 	}
-
 
 }

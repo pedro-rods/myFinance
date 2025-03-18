@@ -9,14 +9,12 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class GastosListaResponse {
+public class PlanoResponse {
+
+	private Long id;
 
 	private Long idUsuario;
 
-	private Double renda;
-
-	private List<GastosAgrupadosResponse> NECESSARIO;
-
-	private List<GastosAgrupadosResponse> FUTIL;
+	List<AjusteResponse> ajustes;
 
 }
