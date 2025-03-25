@@ -7,7 +7,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public enum EnumTipoCategoria {
 
-	NECESSARIO("NECESSARIO"), FUTIL("FUTIL");
+	NECESSIDADE("NECESSIDADE"), INVESTIMENTOS_POUPANCA("INVESTIMENTOS_POUPANCA"), DESEJOS("DESEJOS");
 
 	@Getter
 	@Setter

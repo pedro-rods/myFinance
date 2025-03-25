@@ -15,8 +15,10 @@ public class GastosListaResponse {
 
 	private Double renda;
 
-	private List<GastosAgrupadosResponse> NECESSARIO;
+	private List<GastosAgrupadosResponse> necessidades;
 
-	private List<GastosAgrupadosResponse> FUTIL;
+	private List<GastosAgrupadosResponse> desejos;
+
+	private List<GastosAgrupadosResponse> investimento_e_poupanca;
 
 }

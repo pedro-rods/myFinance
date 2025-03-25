@@ -35,19 +35,23 @@ public class TestConfig implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		Usuario usuario = new Usuario(null, "Teste", "teste@email.com", "123", 12000.0);
+		Usuario usuario = new Usuario(null, "Teste", "teste@email.com", "123", 8000.0);
 		usuario = usuarioRepository.save(usuario);
 
-		Gasto gasto = new Gasto(null, usuario, EnumTipoCategoria.FUTIL, "RESTAURANTE", 678.98, new Date());
-		Gasto gasto1 = new Gasto(null, usuario, EnumTipoCategoria.NECESSARIO, "MERCADO", 698.98, new Date());
-		Gasto gasto2 = new Gasto(null, usuario, EnumTipoCategoria.NECESSARIO, "TRANSPORTE", 6678.98, new Date());
-		Gasto gasto3 = new Gasto(null, usuario, EnumTipoCategoria.FUTIL, "CIGARRO", 678.98, new Date());
-		Gasto gasto4 = new Gasto(null, usuario, EnumTipoCategoria.FUTIL, "CIGARRO", 488.98, new Date());
-		Gasto gasto5 = new Gasto(null, usuario, EnumTipoCategoria.NECESSARIO, "FACULDADE", 678.98, new Date());
-		Gasto gasto7 = new Gasto(null, usuario, EnumTipoCategoria.NECESSARIO, "MORADIA", 1077.98, new Date());
-		Gasto gasto8 = new Gasto(null, usuario, EnumTipoCategoria.FUTIL, "TRANSPORTE", 678.98, new Date());
-		Gasto gasto9 = new Gasto(null, usuario, EnumTipoCategoria.FUTIL, "TRANSPORTE", 678.98, new Date());
-		Gasto gasto10 = new Gasto(null, usuario, EnumTipoCategoria.FUTIL, "CIGARRO", 678.98, new Date());
+		Gasto gasto = new Gasto(null, usuario, EnumTipoCategoria.DESEJOS, "restaurante", 678.98, new Date());
+		Gasto gasto1 = new Gasto(null, usuario, EnumTipoCategoria.NECESSIDADE, "mercado", 618.98, new Date());
+		Gasto gasto2 = new Gasto(null, usuario, EnumTipoCategoria.NECESSIDADE, "transporte", 6678.98, new Date());
+		Gasto gasto3 = new Gasto(null, usuario, EnumTipoCategoria.DESEJOS, "cigarro", 678.98, new Date());
+		Gasto gasto4 = new Gasto(null, usuario, EnumTipoCategoria.DESEJOS, "cigarro", 388.98, new Date());
+		Gasto gasto11 = new Gasto(null, usuario, EnumTipoCategoria.DESEJOS, "academia", 488.98, new Date());
+		Gasto gasto5 = new Gasto(null, usuario, EnumTipoCategoria.NECESSIDADE, "faculdade", 678.98, new Date());
+		Gasto gasto7 = new Gasto(null, usuario, EnumTipoCategoria.NECESSIDADE, "aluguel", 1077.98, new Date());
+		Gasto gasto8 = new Gasto(null, usuario, EnumTipoCategoria.DESEJOS, "transporte por aplicativo", 678.98,
+				new Date());
+		Gasto gasto9 = new Gasto(null, usuario, EnumTipoCategoria.DESEJOS, "transporte por aplicativo", 678.98,
+				new Date());
+		Gasto gasto10 = new Gasto(null, usuario, EnumTipoCategoria.DESEJOS, "cigarro", 678.98, new Date());
+		Gasto gasto12 = new Gasto(null, usuario, EnumTipoCategoria.INVESTIMENTOS_POUPANCA, "investimento", 178.98, new Date());
 		gastoRepository.save(gasto);
 		gastoRepository.save(gasto1);
 		gastoRepository.save(gasto2);
@@ -58,15 +62,18 @@ public class TestConfig implements CommandLineRunner {
 		gastoRepository.save(gasto8);
 		gastoRepository.save(gasto9);
 		gastoRepository.save(gasto10);
+		gastoRepository.save(gasto11);
+		gastoRepository.save(gasto12);
 
 		PlanoFinanceiro plano = new PlanoFinanceiro(null, usuario, null, new Date());
 
 		plano = planoRepository.save(plano);
 
-		Ajuste ajuste = new Ajuste(null, plano, EnumTipoCategoria.FUTIL, "CIGARRO", -1000.98);
-		Ajuste ajuste1 = new Ajuste(null, plano, EnumTipoCategoria.FUTIL, "TRANSPORTE", -1000.98);
-		Ajuste ajuste2 = new Ajuste(null, plano, EnumTipoCategoria.NECESSARIO, "INVESTIMENTO", 2001.56);
-		Ajuste ajuste3 = new Ajuste(null, plano, EnumTipoCategoria.FUTIL, "RESTAURANTE", -1000.98);
+		Ajuste ajuste = new Ajuste(null, plano, EnumTipoCategoria.DESEJOS, "cigarro", -1000.98);
+		Ajuste ajuste1 = new Ajuste(null, plano, EnumTipoCategoria.DESEJOS, "transporte por aplicativo",
+				-1000.98);
+		Ajuste ajuste2 = new Ajuste(null, plano, EnumTipoCategoria.INVESTIMENTOS_POUPANCA, "investimento", 2001.56);
+		Ajuste ajuste3 = new Ajuste(null, plano, EnumTipoCategoria.DESEJOS, "restaurante", -1000.98);
 
 		ajusteRepository.save(ajuste);
 		ajusteRepository.save(ajuste1);

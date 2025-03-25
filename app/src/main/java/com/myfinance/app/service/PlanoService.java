@@ -38,7 +38,7 @@ public class PlanoService {
 		return mapper.toResponse(repository.buscarporUsuario(id));
 	}
 
-	public void gerarPlano(Long id) {
+	public String gerarPlano(Long id) {
 		// Primeiro, buscar os gastos por usuário
 		GastosListaResponse listaGastos = gastoService.buscarGastosPorUsuario(id);
 
@@ -57,6 +57,7 @@ public class PlanoService {
 
 			// Logando a resposta da requisição
 			log.info("Resposta do Flask: " + response.getBody());
+			return response.getBody();
 		} catch (Exception e) {
 			log.error("Erro ao gerar plano: ", e);
 			throw new RuntimeException("Erro ao gerar plano", e);

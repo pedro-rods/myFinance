@@ -27,7 +27,7 @@ public class LoginService {
 	public UsuarioResponse login(LoginRequest login) {
 		Usuario usuario = repository.login(login.getEmail(), login.getSenha());
 		if (usuario == null) {
-			throw new RunTimeExceptionHandler("Email ou senha incooretos");
+			throw new RunTimeExceptionHandler("Email ou senha incorretos");
 		}
 		return mapper.toUsuarioResponse(usuario);
 	}

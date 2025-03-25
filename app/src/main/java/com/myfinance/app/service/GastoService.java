@@ -39,8 +39,10 @@ public class GastoService {
 		Usuario usuario = usuarioService.buscarPorIdOuErro(idUsuario);
 		lista.setRenda(usuario.getRenda());
 		lista.setIdUsuario(idUsuario);
-		lista.setNECESSARIO(repository.findTotalBySubcategoria(idUsuario, EnumTipoCategoria.NECESSARIO));
-		lista.setFUTIL(repository.findTotalBySubcategoria(idUsuario, EnumTipoCategoria.FUTIL));
+		lista.setNecessidades(repository.findTotalBySubcategoria(idUsuario, EnumTipoCategoria.NECESSIDADE));
+		lista.setDesejos(repository.findTotalBySubcategoria(idUsuario, EnumTipoCategoria.DESEJOS));
+		lista.setInvestimento_e_poupanca(
+				repository.findTotalBySubcategoria(idUsuario, EnumTipoCategoria.INVESTIMENTOS_POUPANCA));
 		return lista;
 
 	}
@@ -55,7 +57,7 @@ public class GastoService {
 
 	public void cadastrar(GastoRequest request) {
 		Usuario usuario = usuarioService.buscarPorIdOuErro(request.getIdUsuario());
-		request.setSubcategoria(request.getSubcategoria().toUpperCase());
+		request.setSubcategoria(request.getSubcategoria().toLowerCase());
 		Gasto gasto = mapper.toGastosEntity(request);
 		gasto.setUsuario(usuario);
 		repository.save(gasto);

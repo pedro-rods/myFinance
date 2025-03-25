@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.myfinance.app.response.JsonResponse;
 import com.myfinance.app.response.PlanoResponse;
 import com.myfinance.app.service.PlanoService;
 
@@ -33,10 +32,9 @@ public class PlanoController {
 
 	@PostMapping(value = "")
 	@Operation(summary = "gerar plano")
-	public ResponseEntity<JsonResponse> gerarPlano(@RequestParam Long idUsuario) {
-		service.gerarPlano(idUsuario);
-		JsonResponse response = new JsonResponse();
-		return new ResponseEntity<>(response, null, HttpStatus.OK);
+	public ResponseEntity<String> gerarPlano(@RequestParam Long idUsuario) {
+
+		return new ResponseEntity<>(service.gerarPlano(idUsuario), null, HttpStatus.OK);
 	}
 
 }
