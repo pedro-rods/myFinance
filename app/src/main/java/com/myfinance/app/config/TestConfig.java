@@ -35,43 +35,52 @@ public class TestConfig implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		Usuario usuario = new Usuario(null, "Teste", "teste@email.com", "123", 8000.0);
+		Usuario usuario = new Usuario(null, "Teste", "teste@email.com", "123", 15000.0);
 		usuario = usuarioRepository.save(usuario);
 
 		Gasto gasto = new Gasto(null, usuario, EnumTipoCategoria.DESEJOS, "restaurante", 678.98, new Date());
-		Gasto gasto1 = new Gasto(null, usuario, EnumTipoCategoria.NECESSIDADE, "mercado", 618.98, new Date());
-		Gasto gasto2 = new Gasto(null, usuario, EnumTipoCategoria.NECESSIDADE, "transporte", 6678.98, new Date());
-		Gasto gasto3 = new Gasto(null, usuario, EnumTipoCategoria.DESEJOS, "cigarro", 678.98, new Date());
-		Gasto gasto4 = new Gasto(null, usuario, EnumTipoCategoria.DESEJOS, "cigarro", 388.98, new Date());
+		Gasto gasto1 = new Gasto(null, usuario, EnumTipoCategoria.NECESSIDADE, "conta de luz", 618.98, new Date());
+		Gasto gasto13 = new Gasto(null, usuario, EnumTipoCategoria.NECESSIDADE, "conta de agua", 618.98, new Date());
+		Gasto gasto14 = new Gasto(null, usuario, EnumTipoCategoria.NECESSIDADE, "conta de internet", 788.98,
+				new Date());
+		Gasto gasto17 = new Gasto(null, usuario, EnumTipoCategoria.NECESSIDADE, "mecanico", 427.23, new Date());
+		Gasto gasto18 = new Gasto(null, usuario, EnumTipoCategoria.NECESSIDADE, "condominio", 128.94, new Date());
 		Gasto gasto11 = new Gasto(null, usuario, EnumTipoCategoria.DESEJOS, "academia", 488.98, new Date());
-		Gasto gasto5 = new Gasto(null, usuario, EnumTipoCategoria.NECESSIDADE, "faculdade", 678.98, new Date());
+		Gasto gasto5 = new Gasto(null, usuario, EnumTipoCategoria.NECESSIDADE, "faculdade", 695.98, new Date());
 		Gasto gasto7 = new Gasto(null, usuario, EnumTipoCategoria.NECESSIDADE, "aluguel", 1077.98, new Date());
 		Gasto gasto8 = new Gasto(null, usuario, EnumTipoCategoria.DESEJOS, "transporte por aplicativo", 678.98,
 				new Date());
 		Gasto gasto9 = new Gasto(null, usuario, EnumTipoCategoria.DESEJOS, "transporte por aplicativo", 678.98,
 				new Date());
-		Gasto gasto10 = new Gasto(null, usuario, EnumTipoCategoria.DESEJOS, "cigarro", 678.98, new Date());
-		Gasto gasto12 = new Gasto(null, usuario, EnumTipoCategoria.INVESTIMENTOS_POUPANCA, "investimento", 178.98, new Date());
+		Gasto gasto21 = new Gasto(null, usuario, EnumTipoCategoria.DESEJOS, "roupa", 568.98, new Date());
+		Gasto gasto22 = new Gasto(null, usuario, EnumTipoCategoria.DESEJOS, "restaurante", 390.0, new Date());
+		Gasto gasto23 = new Gasto(null, usuario, EnumTipoCategoria.DESEJOS, "cinema", 150.32, new Date());
+		Gasto gasto24 = new Gasto(null, usuario, EnumTipoCategoria.DESEJOS, "bar", 70.65, new Date());
+		Gasto gasto12 = new Gasto(null, usuario, EnumTipoCategoria.INVESTIMENTOS_POUPANCA, "investimento", 900.98,
+				new Date());
 		gastoRepository.save(gasto);
 		gastoRepository.save(gasto1);
-		gastoRepository.save(gasto2);
-		gastoRepository.save(gasto3);
-		gastoRepository.save(gasto4);
 		gastoRepository.save(gasto5);
 		gastoRepository.save(gasto7);
 		gastoRepository.save(gasto8);
 		gastoRepository.save(gasto9);
-		gastoRepository.save(gasto10);
 		gastoRepository.save(gasto11);
 		gastoRepository.save(gasto12);
+		gastoRepository.save(gasto13);
+		gastoRepository.save(gasto14);
+		gastoRepository.save(gasto17);
+		gastoRepository.save(gasto18);
+		gastoRepository.save(gasto21);
+		gastoRepository.save(gasto22);
+		gastoRepository.save(gasto23);
+		gastoRepository.save(gasto24);
 
 		PlanoFinanceiro plano = new PlanoFinanceiro(null, usuario, null, new Date());
 
 		plano = planoRepository.save(plano);
 
 		Ajuste ajuste = new Ajuste(null, plano, EnumTipoCategoria.DESEJOS, "cigarro", -1000.98);
-		Ajuste ajuste1 = new Ajuste(null, plano, EnumTipoCategoria.DESEJOS, "transporte por aplicativo",
-				-1000.98);
+		Ajuste ajuste1 = new Ajuste(null, plano, EnumTipoCategoria.DESEJOS, "transporte por aplicativo", -1000.98);
 		Ajuste ajuste2 = new Ajuste(null, plano, EnumTipoCategoria.INVESTIMENTOS_POUPANCA, "investimento", 2001.56);
 		Ajuste ajuste3 = new Ajuste(null, plano, EnumTipoCategoria.DESEJOS, "restaurante", -1000.98);
 

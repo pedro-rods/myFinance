@@ -37,4 +37,10 @@ public class PlanoController {
 		return new ResponseEntity<>(service.gerarPlano(idUsuario), null, HttpStatus.OK);
 	}
 
+	@PostMapping(value = "/treinar")
+	@Operation(summary = "treinar modelo")
+	public ResponseEntity<String> treinarModelo() {
+
+		return new ResponseEntity<>(service.treinarModelo(), null, HttpStatus.OK);
+	}
 }

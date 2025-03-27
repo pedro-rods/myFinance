@@ -64,4 +64,27 @@ public class PlanoService {
 		}
 	}
 
+	public String treinarModelo() {
+
+		// URL do endpoint do Flask (ajuste conforme sua URL)
+		String urlFlask = "http://localhost:5000/api/treinar_modelo";
+
+		// Enviar os dados para o Flask
+		try {
+			// Criando a requisição com o objeto GastosListaResponse
+			HttpHeaders headers = new HttpHeaders();
+			HttpEntity<String> entity = new HttpEntity<>(headers);
+
+			// Enviando a requisição POST para o Flask
+			ResponseEntity<String> response = restTemplate.exchange(urlFlask, HttpMethod.POST, entity, String.class);
+
+			// Logando a resposta da requisição
+			log.info("Resposta do Flask: " + response.getBody());
+			return response.getBody();
+		} catch (Exception e) {
+			log.error("Erro ao gerar plano: ", e);
+			throw new RuntimeException("Erro ao gerar plano", e);
+		}
+	}
+
 }
