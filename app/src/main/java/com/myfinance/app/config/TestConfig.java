@@ -35,15 +35,14 @@ public class TestConfig implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		Usuario usuario = new Usuario(null, "Teste", "teste@email.com", "123", 15000.0);
+		Usuario usuario = new Usuario(null, "Teste", "teste@email.com", "123", 5000.0);
 		usuario = usuarioRepository.save(usuario);
 
 		Gasto gasto = new Gasto(null, usuario, EnumTipoCategoria.DESEJOS, "restaurante", 678.98, new Date());
 		Gasto gasto1 = new Gasto(null, usuario, EnumTipoCategoria.NECESSIDADE, "conta de luz", 618.98, new Date());
 		Gasto gasto13 = new Gasto(null, usuario, EnumTipoCategoria.NECESSIDADE, "conta de agua", 618.98, new Date());
-		Gasto gasto14 = new Gasto(null, usuario, EnumTipoCategoria.NECESSIDADE, "conta de internet", 788.98,
-				new Date());
-		Gasto gasto17 = new Gasto(null, usuario, EnumTipoCategoria.NECESSIDADE, "mecanico", 427.23, new Date());
+		Gasto gasto14 = new Gasto(null, usuario, EnumTipoCategoria.NECESSIDADE, "internet", 788.98, new Date());
+		Gasto gasto17 = new Gasto(null, usuario, EnumTipoCategoria.NECESSIDADE, "veiculo", 427.23, new Date());
 		Gasto gasto18 = new Gasto(null, usuario, EnumTipoCategoria.NECESSIDADE, "condominio", 128.94, new Date());
 		Gasto gasto11 = new Gasto(null, usuario, EnumTipoCategoria.DESEJOS, "academia", 488.98, new Date());
 		Gasto gasto5 = new Gasto(null, usuario, EnumTipoCategoria.NECESSIDADE, "faculdade", 695.98, new Date());
@@ -55,7 +54,7 @@ public class TestConfig implements CommandLineRunner {
 		Gasto gasto21 = new Gasto(null, usuario, EnumTipoCategoria.DESEJOS, "roupa", 568.98, new Date());
 		Gasto gasto22 = new Gasto(null, usuario, EnumTipoCategoria.DESEJOS, "restaurante", 390.0, new Date());
 		Gasto gasto23 = new Gasto(null, usuario, EnumTipoCategoria.DESEJOS, "cinema", 150.32, new Date());
-		Gasto gasto24 = new Gasto(null, usuario, EnumTipoCategoria.DESEJOS, "bar", 70.65, new Date());
+		Gasto gasto24 = new Gasto(null, usuario, EnumTipoCategoria.DESEJOS, "assinaturas", 70.65, new Date());
 		Gasto gasto12 = new Gasto(null, usuario, EnumTipoCategoria.INVESTIMENTOS_POUPANCA, "investimento", 900.98,
 				new Date());
 		gastoRepository.save(gasto);
