@@ -35,7 +35,7 @@ public class UsuarioController {
 	@Operation(summary = "Buscar todos os usuarios")
 	public ResponseEntity<Page<UsuarioResponse>> buscarTodos(@RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = "10") int size) {
-		return new ResponseEntity<Page<UsuarioResponse>>(null, null, HttpStatus.OK);
+		return new ResponseEntity<Page<UsuarioResponse>>(service.buscarTodos(page, size), null, HttpStatus.OK);
 	}
 
 	@GetMapping(value = "/p/pesquisar")

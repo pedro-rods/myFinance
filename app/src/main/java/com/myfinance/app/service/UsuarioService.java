@@ -1,8 +1,11 @@
 package com.myfinance.app.service;
 
+import java.util.List;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.myfinance.app.entitiy.Usuario;
@@ -35,6 +38,15 @@ public class UsuarioService {
 		return repository.findById(id).orElseThrow(() -> new RunTimeExceptionHandler("Usuario inexistente"));
 	}
 
+	public Page<UsuarioResponse> buscarTodos(int page, int size) {
+		PageRequest pageRequest = PageRequest.of(page, size);
+		return mapper.toPageUsuarioResponse(repository.findAll(pageRequest));
+	}
+
+	public List<Usuario> buscarTodos() {
+		return repository.findAll();
+	}
+
 	public void cadastrar(@Valid UsuarioRequest request) {
 		Usuario usuario = mapper.toUsuarioEntity(request);
 		Usuario obj = buscarPorEmail(usuario.getEmail());
@@ -62,7 +74,7 @@ public class UsuarioService {
 	}
 
 	public Page<UsuarioResponse> buscarTodosPorNome(String nome, int page, int size) {
-		
+
 		return null;
 	}
 
