@@ -13,11 +13,20 @@ import com.myfinance.app.response.GastosAgrupadosResponse;
 @Repository
 public interface GastoRepository extends JpaRepository<Gasto, Long> {
 
-	@Query("FROM Gasto WHERE usuario.id = :id AND categoria = :categoria ORDER BY dataHora")
+	@Query("FROM Gasto WHERE usuario.id = :id AND categoria = :categoria ORDER BY dataHora DESC")
 	List<Gasto> buscarPorUsuarioETipo(Long id, String categoria);
 
 	@Query("SELECT new com.myfinance.app.response.GastosAgrupadosResponse(g.subcategoria, SUM(g.valor)) FROM Gasto g "
 			+ "WHERE usuario.id = :id AND categoria = :categoria GROUP BY g.subcategoria")
 	List<GastosAgrupadosResponse> findTotalBySubcategoria(Long id, EnumTipoCategoria categoria);
+
+	@Query("SELECT id FROM Gasto WHERE usuario.id = :id")
+	List<Long> buscarIDdeGastosPorUsuario(Long id);
+
+	@Query("FROM Gasto WHERE usuario.id = :id AND LOWER(subcategoria) LIKE LOWER(CONCAT('%', :valor, '%')) ORDER BY dataHora DESC, valor DESC")
+	List<Gasto> buscarPorValor(Long id, String valor);
+
+	@Query("FROM Gasto WHERE usuario.id = :id AND LOWER(subcategoria) LIKE LOWER(CONCAT('%', :valor, '%')) AND categoria = :categoria ORDER BY dataHora DESC, valor DESC")
+	List<Gasto> buscarPorValorECategoria(Long id, String valor, EnumTipoCategoria categoria);
 
 }

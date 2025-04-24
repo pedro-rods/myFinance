@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.myfinance.app.enums.EnumTipoCategoria;
 import com.myfinance.app.request.GastoRequest;
 import com.myfinance.app.response.GastoResponse;
 import com.myfinance.app.response.GastosListaResponse;
@@ -75,6 +76,11 @@ public class GastoController {
 		service.deletar(id);
 		JsonResponse response = new JsonResponse();
 		return new ResponseEntity<>(response, null, HttpStatus.NO_CONTENT);
+	}
 
+	@GetMapping(value = "/buscar/categoria")
+	public List<GastoResponse> buscarPorFiltros(@RequestParam Long id, @RequestParam String valor,
+			@RequestParam(required = false) EnumTipoCategoria categoria) {
+		return service.buscarPorFiltro(id, valor, categoria);
 	}
 }

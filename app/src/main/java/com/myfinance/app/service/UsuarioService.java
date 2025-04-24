@@ -70,6 +70,7 @@ public class UsuarioService {
 	}
 
 	public void deletar(Long id) {
+//		gastoService.buscarGastosPorUsuario(id);
 		repository.deleteById(id);
 
 	}

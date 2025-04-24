@@ -47,6 +47,12 @@ public class GastoService {
 
 	}
 
+	public void deletarGastosPorUsuario(Long idUsuario) {
+		List<Long> IDs = repository.buscarIDdeGastosPorUsuario(idUsuario);
+		repository.deleteAllByIdInBatch(IDs);
+
+	}
+
 	public List<GastoResponse> buscarTodos() {
 		return mapper.toListGastosResponse(repository.findAll(Sort.by("id").descending()));
 	}
@@ -69,6 +75,18 @@ public class GastoService {
 		Gasto novoGasto = mapper.toGastosEntity(request);
 		BeanUtils.copyProperties(novoGasto, gasto, "id", "usuario");
 		repository.save(gasto);
+	}
+
+	public List<GastoResponse> buscarPorFiltro(Long id, String valor, EnumTipoCategoria categoria) {
+		if (categoria == null) {
+			log.info("entrou no sem cat");
+			return mapper.toListGastosResponse(repository.buscarPorValor(id ,valor));
+		} else {
+
+			log.info("entrou no com cat");
+			return mapper.toListGastosResponse(repository.buscarPorValorECategoria(id ,valor, categoria));
+
+		}
 	}
 
 	public Gasto buscarPorIdOuErro(Long id) {
