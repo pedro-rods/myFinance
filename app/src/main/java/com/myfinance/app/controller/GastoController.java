@@ -55,7 +55,7 @@ public class GastoController {
 	}
 
 	@PostMapping(value = "")
-	@Operation(summary = "Cadastrar usuario")
+	@Operation(summary = "Cadastrar gasto")
 	public ResponseEntity<JsonResponse> cadastrar(@RequestBody @Valid GastoRequest request) {
 		service.cadastrar(request);
 		JsonResponse response = new JsonResponse();
@@ -63,7 +63,7 @@ public class GastoController {
 	}
 
 	@PutMapping(value = "")
-	@Operation(summary = "Alterar usuario")
+	@Operation(summary = "Alterar gasto")
 	public ResponseEntity<JsonResponse> alterar(@RequestParam Long id, @RequestBody @Valid GastoRequest request) {
 		service.editar(id, request);
 		JsonResponse response = new JsonResponse();

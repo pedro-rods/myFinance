@@ -24,7 +24,7 @@ public class PlanoController {
 	private PlanoService service;
 
 	@GetMapping(value = "/usuario")
-	@Operation(summary = "Buscar gastos por usuarios")
+	@Operation(summary = "Buscar plano por usuarios")
 	public ResponseEntity<PlanoResponse> buscarPorUsuario(@RequestParam Long idUsuario) {
 
 		return new ResponseEntity<>(service.buscarPorUsuario(idUsuario), null, HttpStatus.OK);
