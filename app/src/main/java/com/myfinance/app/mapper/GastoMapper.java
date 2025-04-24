@@ -13,7 +13,6 @@ import com.myfinance.app.response.GastoResponse;
 @Mapper(componentModel = "spring")
 public interface GastoMapper {
 
-	@Mapping(source = "usuario.id", target = "idUsuario")
 	GastoResponse toGastosResponse(Gasto gastos);
 
 	default Page<GastoResponse> toPageGastosResponse(Page<Gasto> page) {

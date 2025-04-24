@@ -30,7 +30,7 @@ public class GastoRequest {
 	private EnumTipoCategoria categoria;
 
 	@NotNull(message = "dataHora é nula")
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy", timezone = "America/Sao_Paulo")
 	private Date dataHora;
 
 }
