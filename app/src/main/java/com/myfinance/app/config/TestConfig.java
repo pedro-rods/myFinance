@@ -73,23 +73,23 @@ public class TestConfig implements CommandLineRunner {
 		int pick = random.nextInt(3);
 		switch (pick) {
 		case 0:
-			return EnumTipoCategoria.NECESSIDADE;
+			return EnumTipoCategoria.NECESSIDADES;
 		case 1:
 			return EnumTipoCategoria.DESEJOS;
 		case 2:
-			return EnumTipoCategoria.INVESTIMENTOS_POUPANCA;
+			return EnumTipoCategoria.INVESTIMENTO_E_POUPANCA;
 		default:
-			return EnumTipoCategoria.NECESSIDADE;
+			return EnumTipoCategoria.NECESSIDADES;
 		}
 	}
 
 	private String escolherSubCategoria(EnumTipoCategoria tipo) {
 		switch (tipo) {
-		case NECESSIDADE:
+		case NECESSIDADES:
 			return NECESSIDADES.get(random.nextInt(NECESSIDADES.size()));
 		case DESEJOS:
 			return DESEJOS.get(random.nextInt(DESEJOS.size()));
-		case INVESTIMENTOS_POUPANCA:
+		case INVESTIMENTO_E_POUPANCA:
 			return INVESTIMENTOS.get(random.nextInt(INVESTIMENTOS.size()));
 		default:
 			return "outro";

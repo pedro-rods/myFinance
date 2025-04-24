@@ -21,11 +21,11 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Entity
-@Table(name = "ajuste")
+@Table(name = "riscos")
 @SuppressWarnings("serial")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Ajuste implements Serializable {
+public class Risco implements Serializable {
 	@Id
 	@Column
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

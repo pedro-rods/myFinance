@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -36,8 +39,14 @@ public class PlanoFinanceiro implements Serializable {
 	private Usuario usuario;
 
 	@OneToMany(mappedBy = "planoFinanceiro", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<Ajuste> ajustes; // Lista de ajustes de valor por categoria
+	@JsonManagedReference
+	private List<Ajuste> ajustes;
+
+	@OneToMany(mappedBy = "planoFinanceiro", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JsonManagedReference
+	private List<Risco> riscos;
 
 	@Column
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy ", timezone = "America/Sao_Paulo")
 	private Date dataAlteracao;
 }

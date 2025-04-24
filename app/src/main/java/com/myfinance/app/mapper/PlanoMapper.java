@@ -7,8 +7,10 @@ import org.mapstruct.Mapping;
 
 import com.myfinance.app.entitiy.Ajuste;
 import com.myfinance.app.entitiy.PlanoFinanceiro;
+import com.myfinance.app.entitiy.Risco;
 import com.myfinance.app.response.AjusteResponse;
 import com.myfinance.app.response.PlanoResponse;
+import com.myfinance.app.response.RiscoResponse;
 
 @Mapper(componentModel = "spring")
 public interface PlanoMapper {
@@ -19,5 +21,7 @@ public interface PlanoMapper {
 
 	@Mapping(source = "usuario.id", target = "idUsuario")
 	PlanoResponse toResponse(PlanoFinanceiro plano);
+
+	RiscoResponse toResponse(Risco risco);
 
 }

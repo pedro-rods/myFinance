@@ -39,10 +39,10 @@ public class GastoService {
 		Usuario usuario = usuarioService.buscarPorIdOuErro(idUsuario);
 		lista.setRenda(usuario.getRenda());
 		lista.setIdUsuario(idUsuario);
-		lista.setNecessidades(repository.findTotalBySubcategoria(idUsuario, EnumTipoCategoria.NECESSIDADE));
+		lista.setNecessidades(repository.findTotalBySubcategoria(idUsuario, EnumTipoCategoria.NECESSIDADES));
 		lista.setDesejos(repository.findTotalBySubcategoria(idUsuario, EnumTipoCategoria.DESEJOS));
 		lista.setInvestimento_e_poupanca(
-				repository.findTotalBySubcategoria(idUsuario, EnumTipoCategoria.INVESTIMENTOS_POUPANCA));
+				repository.findTotalBySubcategoria(idUsuario, EnumTipoCategoria.INVESTIMENTO_E_POUPANCA));
 		return lista;
 
 	}

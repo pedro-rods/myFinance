@@ -32,7 +32,7 @@ public class PlanoController {
 
 	@PostMapping(value = "")
 	@Operation(summary = "gerar plano")
-	public ResponseEntity<String> gerarPlano(@RequestParam Long idUsuario) {
+	public ResponseEntity<PlanoResponse> gerarPlano(@RequestParam Long idUsuario) {
 
 		return new ResponseEntity<>(service.gerarPlano(idUsuario), null, HttpStatus.OK);
 	}
