@@ -12,6 +12,7 @@ import com.myfinance.app.entitiy.Usuario;
 import com.myfinance.app.exception.RunTimeExceptionHandler;
 import com.myfinance.app.mapper.UsuarioMapper;
 import com.myfinance.app.repository.UsuarioRepository;
+import com.myfinance.app.request.UsuarioCadastroRequest;
 import com.myfinance.app.request.UsuarioRequest;
 import com.myfinance.app.response.UsuarioResponse;
 
@@ -47,7 +48,7 @@ public class UsuarioService {
 		return repository.findAll();
 	}
 
-	public void cadastrar(@Valid UsuarioRequest request) {
+	public void cadastrar(@Valid UsuarioCadastroRequest request) {
 		Usuario usuario = mapper.toUsuarioEntity(request);
 		Usuario obj = buscarPorEmail(usuario.getEmail());
 		if (obj == null) {
@@ -64,7 +65,7 @@ public class UsuarioService {
 	public Usuario atualizarUsuario(Long id, UsuarioRequest request) {
 		Usuario usuarioNovo = mapper.toUsuarioEntity(request);
 		Usuario usuario = buscarPorIdOuErro(id);
-		BeanUtils.copyProperties(usuarioNovo, usuario, "id", "senha");
+		BeanUtils.copyProperties(usuarioNovo, usuario, "id", "senha", "email");
 		return repository.save(usuario);
 	}
 

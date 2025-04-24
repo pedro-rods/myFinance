@@ -7,6 +7,7 @@ import org.mapstruct.Mapping;
 import org.springframework.data.domain.Page;
 
 import com.myfinance.app.entitiy.Usuario;
+import com.myfinance.app.request.UsuarioCadastroRequest;
 import com.myfinance.app.request.UsuarioRequest;
 import com.myfinance.app.response.UsuarioResponse;
 
@@ -18,6 +19,9 @@ public interface UsuarioMapper {
 	default Page<UsuarioResponse> toPageUsuarioResponse(Page<Usuario> page) {
 		return page.map(this::toUsuarioResponse);
 	}
+
+	@Mapping(target = "id", ignore = true)
+	Usuario toUsuarioEntity(UsuarioCadastroRequest caminhadaRequest);
 
 	@Mapping(target = "id", ignore = true)
 	Usuario toUsuarioEntity(UsuarioRequest caminhadaRequest);

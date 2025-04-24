@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.myfinance.app.request.UsuarioRequest;
+import com.myfinance.app.request.UsuarioCadastroRequest;
 import com.myfinance.app.response.JsonResponse;
 import com.myfinance.app.response.UsuarioResponse;
 import com.myfinance.app.service.UsuarioService;
@@ -55,7 +55,7 @@ public class UsuarioController {
 
 	@PostMapping(value = "")
 	@Operation(summary = "Cadastrar usuario")
-	public ResponseEntity<JsonResponse> cadastrar(@RequestBody @Valid UsuarioRequest request) {
+	public ResponseEntity<JsonResponse> cadastrar(@RequestBody @Valid UsuarioCadastroRequest request) {
 		service.cadastrar(request);
 		JsonResponse response = new JsonResponse();
 		return new ResponseEntity<>(response, null, HttpStatus.OK);
@@ -63,7 +63,8 @@ public class UsuarioController {
 
 	@PutMapping(value = "")
 	@Operation(summary = "Alterar usuario")
-	public ResponseEntity<JsonResponse> alterar(@RequestParam Long id, @RequestBody @Valid UsuarioRequest request) {
+	public ResponseEntity<JsonResponse> alterar(@RequestParam Long id,
+			@RequestBody @Valid UsuarioCadastroRequest request) {
 
 		JsonResponse response = new JsonResponse();
 		response.setMessage("método ainda não implementado");
