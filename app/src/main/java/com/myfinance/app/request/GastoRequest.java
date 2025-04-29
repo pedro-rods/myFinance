@@ -16,9 +16,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class GastoRequest {
 
-	@NotNull(message = "IdUsuario vazio")
-	private Long idUsuario;
-
 	@NotNull(message = "Valor é nulo")
 	private Double valor;
 

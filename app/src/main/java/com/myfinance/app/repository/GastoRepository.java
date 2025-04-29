@@ -23,10 +23,16 @@ public interface GastoRepository extends JpaRepository<Gasto, Long> {
 	@Query("SELECT id FROM Gasto WHERE usuario.id = :id")
 	List<Long> buscarIDdeGastosPorUsuario(Long id);
 
-	@Query("FROM Gasto WHERE usuario.id = :id AND LOWER(subcategoria) LIKE LOWER(CONCAT('%', :valor, '%')) ORDER BY dataHora DESC, valor DESC")
-	List<Gasto> buscarPorValor(Long id, String valor);
+	@Query("FROM Gasto WHERE usuario.id = :idUsuario AND LOWER(subcategoria) LIKE LOWER(CONCAT('%', :valor, '%')) ORDER BY dataHora DESC, valor DESC")
+	List<Gasto> buscarPorValor(Long idUsuario, String valor);
 
-	@Query("FROM Gasto WHERE usuario.id = :id AND LOWER(subcategoria) LIKE LOWER(CONCAT('%', :valor, '%')) AND categoria = :categoria ORDER BY dataHora DESC, valor DESC")
-	List<Gasto> buscarPorValorECategoria(Long id, String valor, EnumTipoCategoria categoria);
+	@Query("FROM Gasto WHERE usuario.id = :idUsuario AND LOWER(subcategoria) LIKE LOWER(CONCAT('%', :valor, '%')) AND categoria = :categoria ORDER BY dataHora DESC, valor DESC")
+	List<Gasto> buscarPorValorECategoria(Long idUsuario, String valor, EnumTipoCategoria categoria);
+
+	@Query("FROM Gasto WHERE usuario.id = :idUsuario AND categoria = :categoria ORDER BY dataHora DESC, valor DESC")
+	List<Gasto> buscarPorCategoria(Long idUsuario, EnumTipoCategoria categoria);
+
+	@Query("FROM Gasto WHERE usuario.id = :idUsuario ORDER BY dataHora DESC, valor DESC")
+	List<Gasto> buscarPorUsuario(Long idUsuario);
 
 }

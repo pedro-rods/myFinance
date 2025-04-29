@@ -62,15 +62,14 @@ public class UsuarioService {
 		return repository.buscarPorEmail(email);
 	}
 
-	public Usuario atualizarUsuario(Long id, UsuarioRequest request) {
+	public void atualizarUsuario(Long id, UsuarioRequest request) {
 		Usuario usuarioNovo = mapper.toUsuarioEntity(request);
 		Usuario usuario = buscarPorIdOuErro(id);
 		BeanUtils.copyProperties(usuarioNovo, usuario, "id", "senha", "email");
-		return repository.save(usuario);
+		repository.save(usuario);
 	}
 
 	public void deletar(Long id) {
-//		gastoService.buscarGastosPorUsuario(id);
 		repository.deleteById(id);
 
 	}

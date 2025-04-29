@@ -61,8 +61,8 @@ public class GastoService {
 		return mapper.toGastosResponse(repository.findById(id).orElse(null));
 	}
 
-	public void cadastrar(GastoRequest request) {
-		Usuario usuario = usuarioService.buscarPorIdOuErro(request.getIdUsuario());
+	public void cadastrar(Long idUsuario, GastoRequest request) {
+		Usuario usuario = usuarioService.buscarPorIdOuErro(idUsuario);
 		request.setSubcategoria(request.getSubcategoria().toLowerCase());
 		Gasto gasto = mapper.toGastosEntity(request);
 		gasto.setUsuario(usuario);
@@ -71,22 +71,30 @@ public class GastoService {
 
 	public void editar(Long id, GastoRequest request) {
 		Gasto gasto = buscarPorIdOuErro(id);
-		request.setSubcategoria(request.getSubcategoria().toUpperCase());
+		request.setSubcategoria(request.getSubcategoria().toLowerCase());
 		Gasto novoGasto = mapper.toGastosEntity(request);
 		BeanUtils.copyProperties(novoGasto, gasto, "id", "usuario");
 		repository.save(gasto);
 	}
 
-	public List<GastoResponse> buscarPorFiltro(Long id, String valor, EnumTipoCategoria categoria) {
-		if (categoria == null) {
+	public List<GastoResponse> buscarPorFiltro(Long idUsuario, String valor, EnumTipoCategoria categoria) {
+		if (categoria == null && valor != null) {
 			log.info("entrou no sem cat");
-			return mapper.toListGastosResponse(repository.buscarPorValor(id ,valor));
-		} else {
+			return mapper.toListGastosResponse(repository.buscarPorValor(idUsuario, valor));
+		}
+
+		if (categoria != null && valor == null) {
+			return mapper.toListGastosResponse(repository.buscarPorCategoria(idUsuario, categoria));
+		}
+
+		if (categoria != null && valor != null) {
 
 			log.info("entrou no com cat");
-			return mapper.toListGastosResponse(repository.buscarPorValorECategoria(id ,valor, categoria));
+			return mapper.toListGastosResponse(repository.buscarPorValorECategoria(idUsuario, valor, categoria));
 
 		}
+		return mapper.toListGastosResponse(repository.buscarPorUsuario(idUsuario));
+
 	}
 
 	public Gasto buscarPorIdOuErro(Long id) {

@@ -9,7 +9,7 @@ import com.myfinance.app.entitiy.Usuario;
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
-	@Query("FROM Usuario u WHERE u.email = :email")
+	@Query("FROM Usuario u WHERE UPPER(u.email) = UPPER(:email)")
 	Usuario buscarPorEmail(String email);
 
 	@Query("FROM Usuario WHERE UPPER(email) = UPPER(:email) AND senha = :senha")

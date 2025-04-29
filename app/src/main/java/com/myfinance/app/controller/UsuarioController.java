@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.myfinance.app.request.UsuarioCadastroRequest;
+import com.myfinance.app.request.UsuarioRequest;
 import com.myfinance.app.response.JsonResponse;
 import com.myfinance.app.response.UsuarioResponse;
 import com.myfinance.app.service.UsuarioService;
@@ -53,7 +54,7 @@ public class UsuarioController {
 		return new ResponseEntity<>(service.buscarPorid(id), null, HttpStatus.OK);
 	}
 
-	@PostMapping(value = "")
+	@PostMapping(value = "/cadastrar")
 	@Operation(summary = "Cadastrar usuario")
 	public ResponseEntity<JsonResponse> cadastrar(@RequestBody @Valid UsuarioCadastroRequest request) {
 		service.cadastrar(request);
@@ -61,22 +62,22 @@ public class UsuarioController {
 		return new ResponseEntity<>(response, null, HttpStatus.OK);
 	}
 
-	@PutMapping(value = "")
+	@PutMapping(value = "/alterar")
 	@Operation(summary = "Alterar usuario")
-	public ResponseEntity<JsonResponse> alterar(@RequestParam Long id,
-			@RequestBody @Valid UsuarioCadastroRequest request) {
+	public ResponseEntity<JsonResponse> alterar(@RequestParam Long id, @RequestBody @Valid UsuarioRequest request) {
 
 		JsonResponse response = new JsonResponse();
-		response.setMessage("método ainda não implementado");
-		return new ResponseEntity<>(response, null, HttpStatus.NO_CONTENT);
+		service.atualizarUsuario(id, request);
+		return new ResponseEntity<>(response, null, HttpStatus.OK);
 	}
 
-	@DeleteMapping(value = "")
+	@DeleteMapping(value = "/delete")
 	@Operation(summary = "deletar usuario")
 	public ResponseEntity<JsonResponse> deletar(@RequestParam Long id) {
-		service.deletar(id);
+//		service.deletar(id);
 		JsonResponse response = new JsonResponse();
-		return new ResponseEntity<>(response, null, HttpStatus.NO_CONTENT);
+		response.setMessage("método ainda não implementado");
+		return new ResponseEntity<>(response, null, HttpStatus.OK);
 
 	}
 }

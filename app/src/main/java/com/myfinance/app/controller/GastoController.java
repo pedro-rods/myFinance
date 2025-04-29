@@ -49,20 +49,21 @@ public class GastoController {
 
 	@GetMapping(value = "/usuario/all")
 	@Operation(summary = "Buscar todos gastos por usuarios")
-	public ResponseEntity<List<GastoResponse>> buscarTodosPorUsuario() {
+	public ResponseEntity<List<GastoResponse>> buscarTodosPorUsuario(@RequestParam Long idUsuario) {
 
 		return new ResponseEntity<>(service.buscarTodos(), null, HttpStatus.OK);
 	}
 
-	@PostMapping(value = "")
+	@PostMapping(value = "/cadastrar")
 	@Operation(summary = "Cadastrar gasto")
-	public ResponseEntity<JsonResponse> cadastrar(@RequestBody @Valid GastoRequest request) {
-		service.cadastrar(request);
+	public ResponseEntity<JsonResponse> cadastrar(@RequestParam Long idUsuario,
+			@RequestBody @Valid GastoRequest request) {
+		service.cadastrar(idUsuario, request);
 		JsonResponse response = new JsonResponse();
 		return new ResponseEntity<>(response, null, HttpStatus.OK);
 	}
 
-	@PutMapping(value = "")
+	@PutMapping(value = "/alterar")
 	@Operation(summary = "Alterar gasto")
 	public ResponseEntity<JsonResponse> alterar(@RequestParam Long id, @RequestBody @Valid GastoRequest request) {
 		service.editar(id, request);
@@ -70,17 +71,18 @@ public class GastoController {
 		return new ResponseEntity<>(response, null, HttpStatus.OK);
 	}
 
-	@DeleteMapping(value = "")
+	@DeleteMapping(value = "/deletar")
 	@Operation(summary = "deletar gasto")
 	public ResponseEntity<JsonResponse> deletar(@RequestParam Long id) {
 		service.deletar(id);
 		JsonResponse response = new JsonResponse();
-		return new ResponseEntity<>(response, null, HttpStatus.NO_CONTENT);
+		return new ResponseEntity<>(response, null, HttpStatus.OK);
 	}
 
 	@GetMapping(value = "/buscar/categoria")
-	public List<GastoResponse> buscarPorFiltros(@RequestParam Long id, @RequestParam String valor,
-			@RequestParam(required = false) EnumTipoCategoria categoria) {
-		return service.buscarPorFiltro(id, valor, categoria);
+	@Operation(summary = "buscar por valor. O parâmetro Valor (opcional) é a string da subcategoria. Categoria (também opcional) é autoexplicativo")
+	public List<GastoResponse> buscarPorFiltros(@RequestParam Long idUsuario,
+			@RequestParam(required = false) String valor, @RequestParam(required = false) EnumTipoCategoria categoria) {
+		return service.buscarPorFiltro(idUsuario, valor, categoria);
 	}
 }
