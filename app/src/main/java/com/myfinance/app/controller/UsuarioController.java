@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.myfinance.app.request.AlterarSenhaRequest;
 import com.myfinance.app.request.UsuarioCadastroRequest;
 import com.myfinance.app.request.UsuarioRequest;
 import com.myfinance.app.response.JsonResponse;
@@ -68,6 +69,24 @@ public class UsuarioController {
 
 		JsonResponse response = new JsonResponse();
 		service.atualizarUsuario(id, request);
+		return new ResponseEntity<>(response, null, HttpStatus.OK);
+	}
+
+	@PutMapping(value = "/alterar/email")
+	@Operation(summary = "Alterar email")
+	public ResponseEntity<JsonResponse> alterarEmail(@RequestParam Long id, @RequestParam String email) {
+
+		JsonResponse response = new JsonResponse();
+		service.alterarEmail(id, email);
+		return new ResponseEntity<>(response, null, HttpStatus.OK);
+	}
+
+	@PutMapping(value = "/alterar/senha")
+	@Operation(summary = "Alterar senha")
+	public ResponseEntity<JsonResponse> alterarSenha(@RequestParam Long id, @RequestBody AlterarSenhaRequest request) {
+
+		JsonResponse response = new JsonResponse();
+		service.alterarSenha(id, request);
 		return new ResponseEntity<>(response, null, HttpStatus.OK);
 	}
 

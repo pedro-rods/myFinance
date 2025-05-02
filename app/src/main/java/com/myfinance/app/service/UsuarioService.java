@@ -12,6 +12,7 @@ import com.myfinance.app.entitiy.Usuario;
 import com.myfinance.app.exception.RunTimeExceptionHandler;
 import com.myfinance.app.mapper.UsuarioMapper;
 import com.myfinance.app.repository.UsuarioRepository;
+import com.myfinance.app.request.AlterarSenhaRequest;
 import com.myfinance.app.request.UsuarioCadastroRequest;
 import com.myfinance.app.request.UsuarioRequest;
 import com.myfinance.app.response.UsuarioResponse;
@@ -67,6 +68,39 @@ public class UsuarioService {
 		Usuario usuario = buscarPorIdOuErro(id);
 		BeanUtils.copyProperties(usuarioNovo, usuario, "id", "senha", "email");
 		repository.save(usuario);
+	}
+
+	public void alterarEmail(Long id, String email) {
+		email = email.toLowerCase();
+		Usuario usuario = buscarPorIdOuErro(id);
+		if (usuario.getEmail().toLowerCase() == email) {
+
+			throw new RunTimeExceptionHandler("este email já é o seu!");
+		}
+		Usuario flag = buscarPorEmail(email.toLowerCase());
+		if (flag != null) {
+			throw new RunTimeExceptionHandler("email já cadastrado no banco de dados");
+		}
+		usuario.setEmail(email);
+		repository.save(usuario);
+	}
+
+	public void alterarSenha(Long id, AlterarSenhaRequest request) {
+
+		String email = request.getEmail();
+		String senhaAntiga = request.getSenhaAntiga();
+		String senhaNova = request.getSenhaNova();
+		Usuario usuario = repository.login(email, senhaAntiga);
+		if (usuario == null) {
+			throw new RunTimeExceptionHandler("email ou senha incorretos");
+		}
+		if (usuario.getId() != id) {
+
+			throw new RunTimeExceptionHandler("usuario não correspondente");
+		}
+		usuario.setSenha(senhaNova);
+		repository.save(usuario);
+
 	}
 
 	public void deletar(Long id) {

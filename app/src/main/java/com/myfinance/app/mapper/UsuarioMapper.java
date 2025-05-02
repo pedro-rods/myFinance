@@ -21,9 +21,12 @@ public interface UsuarioMapper {
 	}
 
 	@Mapping(target = "id", ignore = true)
+	@Mapping(target = "renda", ignore = true)
 	Usuario toUsuarioEntity(UsuarioCadastroRequest caminhadaRequest);
 
 	@Mapping(target = "id", ignore = true)
+	@Mapping(target = "email", ignore = true)
+	@Mapping(target = "senha", ignore = true)
 	Usuario toUsuarioEntity(UsuarioRequest caminhadaRequest);
 
 	List<UsuarioResponse> toListUsuarioResponse(List<Usuario> list);
