@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.myfinance.app.request.AlterarSenhaRequest;
+import com.myfinance.app.request.LoginRequest;
 import com.myfinance.app.request.UsuarioCadastroRequest;
 import com.myfinance.app.request.UsuarioRequest;
 import com.myfinance.app.response.JsonResponse;
@@ -74,10 +75,10 @@ public class UsuarioController {
 
 	@PutMapping(value = "/alterar/email")
 	@Operation(summary = "Alterar email")
-	public ResponseEntity<JsonResponse> alterarEmail(@RequestParam Long id, @RequestParam String email) {
+	public ResponseEntity<JsonResponse> alterarEmail(@RequestParam Long id, @RequestBody LoginRequest request) {
 
 		JsonResponse response = new JsonResponse();
-		service.alterarEmail(id, email);
+		service.alterarEmail(id, request);
 		return new ResponseEntity<>(response, null, HttpStatus.OK);
 	}
 

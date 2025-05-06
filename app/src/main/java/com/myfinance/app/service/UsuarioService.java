@@ -13,6 +13,7 @@ import com.myfinance.app.exception.RunTimeExceptionHandler;
 import com.myfinance.app.mapper.UsuarioMapper;
 import com.myfinance.app.repository.UsuarioRepository;
 import com.myfinance.app.request.AlterarSenhaRequest;
+import com.myfinance.app.request.LoginRequest;
 import com.myfinance.app.request.UsuarioCadastroRequest;
 import com.myfinance.app.request.UsuarioRequest;
 import com.myfinance.app.response.UsuarioResponse;
@@ -70,9 +71,16 @@ public class UsuarioService {
 		repository.save(usuario);
 	}
 
-	public void alterarEmail(Long id, String email) {
-		email = email.toLowerCase();
+	public void alterarEmail(Long id, LoginRequest request) {
+		String email = request.getEmail().toLowerCase();
 		Usuario usuario = buscarPorIdOuErro(id);
+
+		Usuario user2 = repository.login(usuario.getEmail(), request.getSenha());
+
+		if (user2 == null) {
+			throw new RunTimeExceptionHandler("Senha incorreta");
+		}
+
 		if (usuario.getEmail().toLowerCase() == email) {
 
 			throw new RunTimeExceptionHandler("este email já é o seu!");
