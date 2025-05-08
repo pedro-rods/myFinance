@@ -113,7 +113,6 @@ public class UsuarioService {
 
 	public void deletar(Long id) {
 		repository.deleteById(id);
-
 	}
 
 	public Page<UsuarioResponse> buscarTodosPorNome(String nome, int page, int size) {
