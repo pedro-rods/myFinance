@@ -91,13 +91,5 @@ public class UsuarioController {
 		return new ResponseEntity<>(response, null, HttpStatus.OK);
 	}
 
-	@DeleteMapping(value = "/delete")
-	@Operation(summary = "deletar usuario")
-	public ResponseEntity<JsonResponse> deletar(@RequestParam Long id) {
-//		service.deletar(id);
-		JsonResponse response = new JsonResponse();
-		response.setMessage("método ainda não implementado");
-		return new ResponseEntity<>(response, null, HttpStatus.OK);
 
-	}
 }
