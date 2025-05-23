@@ -1,5 +1,7 @@
 package com.myfinance.app.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +27,7 @@ public class PlanoController {
 
 	@GetMapping(value = "/usuario")
 	@Operation(summary = "Buscar plano por usuarios")
-	public ResponseEntity<PlanoResponse> buscarPorUsuario(@RequestParam Long idUsuario) {
+	public ResponseEntity<List<PlanoResponse>> buscarPorUsuario(@RequestParam Long idUsuario) {
 
 		return new ResponseEntity<>(service.buscarPorUsuario(idUsuario), null, HttpStatus.OK);
 	}

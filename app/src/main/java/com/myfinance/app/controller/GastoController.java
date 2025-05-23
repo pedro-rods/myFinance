@@ -47,12 +47,12 @@ public class GastoController {
 		return new ResponseEntity<>(service.buscar(id), null, HttpStatus.OK);
 	}
 
-	@GetMapping(value = "/usuario/all")
-	@Operation(summary = "Buscar todos gastos por usuarios")
-	public ResponseEntity<List<GastoResponse>> buscarTodosPorUsuario(@RequestParam Long idUsuario) {
-
-		return new ResponseEntity<>(service.buscarTodos(), null, HttpStatus.OK);
-	}
+//	@GetMapping(value = "/usuario/all")
+//	@Operation(summary = "Buscar todos gastos por usuarios")
+//	public ResponseEntity<List<GastoResponse>> buscarTodosPorUsuario(@RequestParam Long idUsuario) {
+//
+//		return new ResponseEntity<>(service.buscarTodos(), null, HttpStatus.OK);
+//	}
 
 	@PostMapping(value = "/cadastrar")
 	@Operation(summary = "Cadastrar gasto")

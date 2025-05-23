@@ -22,6 +22,8 @@ public interface PlanoMapper {
 	@Mapping(source = "usuario.id", target = "idUsuario")
 	PlanoResponse toResponse(PlanoFinanceiro plano);
 
+	List<PlanoResponse> toResponse(List<PlanoFinanceiro> list);
+
 	RiscoResponse toResponse(Risco risco);
 
 }

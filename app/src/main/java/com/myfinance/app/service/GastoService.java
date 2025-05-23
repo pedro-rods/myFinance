@@ -78,12 +78,12 @@ public class GastoService {
 	}
 
 	public List<GastoResponse> buscarPorFiltro(Long idUsuario, String valor, EnumTipoCategoria categoria) {
-		if (categoria == null && valor != null) {
+		if (categoria == null && valor != null && !valor.isBlank()) {
 			log.info("entrou no sem cat");
 			return mapper.toListGastosResponse(repository.buscarPorValor(idUsuario, valor));
 		}
 
-		if (categoria != null && valor == null) {
+		if (categoria != null && (valor == null || valor.isBlank())) {
 			return mapper.toListGastosResponse(repository.buscarPorCategoria(idUsuario, categoria));
 		}
 

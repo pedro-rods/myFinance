@@ -48,7 +48,7 @@ public class PlanoService {
 	@Autowired
 	private RestTemplate restTemplate; // Injeção do RestTemplate
 
-	public PlanoResponse buscarPorUsuario(Long id) {
+	public List<PlanoResponse> buscarPorUsuario(Long id) {
 		return mapper.toResponse(repository.buscarporUsuario(id));
 	}
 
@@ -74,8 +74,55 @@ public class PlanoService {
 			return this.processarRespostaFlaskESalvar(response.getBody(), usuarioService.buscarPorIdOuErro(id));
 		} catch (Exception e) {
 			log.error("Erro ao gerar plano: ", e);
-			throw new RuntimeException("Erro ao gerar plano", e);
+//			throw new RuntimeException("Erro ao gerar plano", e);
+			return gerarPlanoEstatico(id);
+
 		}
+	}
+
+	private PlanoResponse gerarPlanoEstatico(Long id) {
+		Usuario usuario = usuarioService.buscarPorIdOuErro(id);
+		PlanoFinanceiro plano = new PlanoFinanceiro();
+		plano.setUsuario(usuario);
+		plano.setDataAlteracao(new Date());
+
+		List<Ajuste> ajustes = new ArrayList<>();
+		List<Risco> riscos = new ArrayList<>();
+
+		// Ajustes estáticos genéricos
+		ajustes.add(novoAjuste(plano, EnumTipoCategoria.NECESSIDADES, "aluguel", 500.00));
+		ajustes.add(novoAjuste(plano, EnumTipoCategoria.DESEJOS, "streaming", 100.00));
+		ajustes.add(novoAjuste(plano, EnumTipoCategoria.INVESTIMENTO_E_POUPANCA, "poupança", 300.00));
+
+		// Riscos estáticos genéricos
+		riscos.add(novoRisco(plano, EnumTipoCategoria.NECESSIDADES, "aluguel", 3000.00));
+		riscos.add(novoRisco(plano, EnumTipoCategoria.DESEJOS, "streaming", 800.00));
+
+		plano.setAjustes(ajustes);
+		plano.setRiscos(riscos);
+
+		plano = repository.save(plano);
+
+		return mapper.toResponse(plano);
+	}
+
+	// Métodos auxiliares para clareza
+	private Ajuste novoAjuste(PlanoFinanceiro plano, EnumTipoCategoria categoria, String subcategoria, double valor) {
+		Ajuste ajuste = new Ajuste();
+		ajuste.setPlanoFinanceiro(plano);
+		ajuste.setCategoria(categoria);
+		ajuste.setSubcategoria(subcategoria);
+		ajuste.setValor(valor);
+		return ajuste;
+	}
+
+	private Risco novoRisco(PlanoFinanceiro plano, EnumTipoCategoria categoria, String subcategoria, double valor) {
+		Risco risco = new Risco();
+		risco.setPlanoFinanceiro(plano);
+		risco.setCategoria(categoria);
+		risco.setSubcategoria(subcategoria);
+		risco.setValor(valor);
+		return risco;
 	}
 
 	@Transactional
