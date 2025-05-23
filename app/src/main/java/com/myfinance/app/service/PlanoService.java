@@ -46,6 +46,12 @@ public class PlanoService {
 	private UsuarioService usuarioService;
 
 	@Autowired
+	private AjusteService ajusteService;
+
+	@Autowired
+	private RiscoService riscoService;
+
+	@Autowired
 	private RestTemplate restTemplate; // Injeção do RestTemplate
 
 	public List<PlanoResponse> buscarPorUsuario(Long id) {
@@ -206,6 +212,20 @@ public class PlanoService {
 			log.error("Erro ao gerar plano: ", e);
 			throw new RuntimeException("Erro ao gerar plano", e);
 		}
+	}
+
+	public void deletarPlanosporUsuario(Long id) {
+		List<PlanoFinanceiro> planos = repository.buscarporUsuario(id);
+		for (PlanoFinanceiro plano : planos) {
+			for (Ajuste ajuste : plano.getAjustes()) {
+				ajusteService.deletar(ajuste.getId());
+			}
+			for (Risco risco : plano.getRiscos()) {
+				riscoService.deletar(risco.getId());
+			}
+			repository.deleteById(plano.getId());
+		}
+
 	}
 
 }

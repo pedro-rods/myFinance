@@ -3,8 +3,7 @@ package com.myfinance.app.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.myfinance.app.mapper.GastoMapper;
-import com.myfinance.app.repository.AjusteRepository;
+import com.myfinance.app.repository.RiscoRepository;
 
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
@@ -15,12 +14,10 @@ import lombok.extern.slf4j.Slf4j;
 public class RiscoService {
 
 	@Autowired
-	private AjusteRepository repository;
+	private RiscoRepository repository;
 
-	@Autowired
-	private GastoMapper mapper;
-
-	@Autowired
-	private UsuarioService usuarioService;
+	public void deletar(Long id) {
+		repository.deleteById(id);
+	}
 
 }

@@ -15,9 +15,12 @@ public class UsuarioGastoService {
 	private UsuarioService usuarioService;
 	@Autowired
 	private GastoService gastoService;
+	@Autowired
+	private PlanoService planoService;
 
-	public void deletar(Long id) { 
+	public void deletar(Long id) {
 		gastoService.deletarGastosPorUsuario(id);
+		planoService.deletarPlanosporUsuario(id);
 		usuarioService.deletar(id);
 
 	}
