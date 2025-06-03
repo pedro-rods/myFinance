@@ -58,11 +58,26 @@ public class PlanoService {
 		return mapper.toResponse(repository.buscarporUsuario(id));
 	}
 
-	public PlanoResponse gerarPlano(Long id) {
-		// Primeiro, buscar os gastos por usuário
+	public PlanoResponse gerarPlano(Long id, Double valorPraPoupar) {
+
+		Boolean flagValorPraPoupar = false;
+		// Buscar usuario
+		Usuario user = usuarioService.buscarPorIdOuErro(id);
+
+		if (valorPraPoupar != null) {
+			flagValorPraPoupar = true;
+			if ((user.getRenda() * 0.5) <= valorPraPoupar) {
+				throw new RuntimeException("O valor poupado deve ser menor que 50% da renda");
+			}
+		}
+
+		// buscar gastos por usuario
 		GastosListaResponse listaGastos = gastoService.buscarGastosPorUsuario(id);
 
-		// URL do endpoint do Flask (ajuste conforme sua URL)
+		if (flagValorPraPoupar) {
+			listaGastos.setRenda((listaGastos.getRenda() - (valorPraPoupar + 10))); // fator de correção
+		}
+		// URL do endpoint do Flask
 		String urlFlask = "http://localhost:5000/api/gerar_plano";
 
 		// Enviar os dados para o Flask
@@ -77,7 +92,7 @@ public class PlanoService {
 
 			// Logando a resposta da requisição
 			log.info("Resposta do Flask: " + response.getBody());
-			return this.processarRespostaFlaskESalvar(response.getBody(), usuarioService.buscarPorIdOuErro(id));
+			return this.processarRespostaFlaskESalvar(response.getBody(), user, flagValorPraPoupar, valorPraPoupar);
 		} catch (Exception e) {
 			log.error("Erro ao gerar plano: ", e);
 //			throw new RuntimeException("Erro ao gerar plano", e);
@@ -132,7 +147,8 @@ public class PlanoService {
 	}
 
 	@Transactional
-	public PlanoResponse processarRespostaFlaskESalvar(String respostaJson, Usuario usuario) {
+	public PlanoResponse processarRespostaFlaskESalvar(String respostaJson, Usuario usuario,
+			Boolean flagTemValorPraPoupar, Double valorPraPoupar) {
 		ObjectMapper mapper = new ObjectMapper();
 		PlanoFinanceiro plano = new PlanoFinanceiro();
 		plano.setUsuario(usuario);
@@ -147,15 +163,12 @@ public class PlanoService {
 			// Processa os ajustes de cada categoria
 			for (EnumTipoCategoria categoriaEnum : EnumTipoCategoria.values()) {
 				String categoria = categoriaEnum.name().toLowerCase();
-				System.out.println(categoria);// Categoria em lowercase, conforme esperado na
-												// resposta JSON
 				JsonNode categoriaArray = root.get(categoria);
 				if (categoriaArray != null && categoriaArray.isArray()) {
 					for (JsonNode item : categoriaArray) {
 						Ajuste ajuste = new Ajuste();
 						ajuste.setPlanoFinanceiro(plano);
 						ajuste.setCategoria(categoriaEnum);
-						System.out.println(categoriaEnum);
 						ajuste.setSubcategoria(item.get("subcategoria").asText());
 						ajuste.setValor(item.get("valor").asDouble());
 						ajustes.add(ajuste);
@@ -177,12 +190,20 @@ public class PlanoService {
 					riscos.add(risco);
 				}
 			}
-
+			if (flagTemValorPraPoupar) {
+				Ajuste ajuste = new Ajuste();
+				ajuste.setCategoria(EnumTipoCategoria.INVESTIMENTO_E_POUPANCA);
+				ajuste.setSubcategoria("Valor poupado");
+				ajuste.setValor(valorPraPoupar);
+				ajuste.setPlanoFinanceiro(plano);
+				ajustes.add(ajuste);
+			}
 			plano.setAjustes(ajustes);
 			plano.setRiscos(riscos);
 
 			// Persiste o plano no banco de dados
 			plano = repository.save(plano);
+			System.out.println(plano.getValorTotalAjustes());
 			return this.mapper.toResponse(plano);
 
 		} catch (Exception e) {

@@ -49,4 +49,12 @@ public class PlanoFinanceiro implements Serializable {
 	@Column
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy ", timezone = "America/Sao_Paulo")
 	private Date dataAlteracao;
+
+	public Double getValorTotalAjustes() {
+		if (ajustes == null) {
+			return 0.0;
+		}
+
+		return ajustes.stream().filter(ajuste -> ajuste.getValor() != null).mapToDouble(Ajuste::getValor).sum();
+	}
 }

@@ -34,9 +34,10 @@ public class PlanoController {
 
 	@PostMapping(value = "")
 	@Operation(summary = "gerar plano")
-	public ResponseEntity<PlanoResponse> gerarPlano(@RequestParam Long idUsuario) {
+	public ResponseEntity<PlanoResponse> gerarPlano(@RequestParam Long idUsuario,
+			@RequestParam(required = false) Double valorPraPoupar) {
 
-		return new ResponseEntity<>(service.gerarPlano(idUsuario), null, HttpStatus.OK);
+		return new ResponseEntity<>(service.gerarPlano(idUsuario, valorPraPoupar), null, HttpStatus.OK);
 	}
 
 //	@PostMapping(value = "/treinar")
