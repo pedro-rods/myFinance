@@ -66,8 +66,8 @@ public class PlanoService {
 
 		if (valorPraPoupar != null) {
 			flagValorPraPoupar = true;
-			if ((user.getRenda() * 0.5) <= valorPraPoupar) {
-				throw new RuntimeException("O valor poupado deve ser menor que 50% da renda");
+			if ((user.getRenda() * 1/3) <= valorPraPoupar) {
+				throw new RuntimeException("Valores maiores que um terço não serão aceitos.");
 			}
 		}
 
