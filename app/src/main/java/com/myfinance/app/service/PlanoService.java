@@ -192,8 +192,8 @@ public class PlanoService {
 			}
 			if (flagTemValorPraPoupar) {
 				Ajuste ajuste = new Ajuste();
-				ajuste.setCategoria(EnumTipoCategoria.INVESTIMENTO_E_POUPANCA);
-				ajuste.setSubcategoria("Valor poupado");
+				ajuste.setCategoria(EnumTipoCategoria.ECONOMIA_PLANEJADA);
+				ajuste.setSubcategoria("Economia planejada");
 				ajuste.setValor(valorPraPoupar);
 				ajuste.setPlanoFinanceiro(plano);
 				ajustes.add(ajuste);

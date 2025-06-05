@@ -63,6 +63,9 @@ public class GastoService {
 
 	public void cadastrar(Long idUsuario, GastoRequest request) {
 		Usuario usuario = usuarioService.buscarPorIdOuErro(idUsuario);
+		if (request.getCategoria() == EnumTipoCategoria.ECONOMIA_PLANEJADA) {
+			throw new RunTimeExceptionHandler("Categoria destinada apenas a IA");
+		}
 		request.setSubcategoria(request.getSubcategoria().toLowerCase());
 		Gasto gasto = mapper.toGastosEntity(request);
 		gasto.setUsuario(usuario);
