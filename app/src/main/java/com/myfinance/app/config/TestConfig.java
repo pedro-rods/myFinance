@@ -62,7 +62,7 @@ public class TestConfig implements CommandLineRunner {
 		for (int i = 0; i < quantidadeGastos; i++) {
 			EnumTipoCategoria macroCategoria = escolherMacroCategoria();
 			String subCategoria = escolherSubCategoria(macroCategoria);
-			double valor = 50 + (5000 * random.nextDouble()); // Gastos entre 50 e 5000
+			double valor = 50 + (3000 * random.nextDouble()); // Gastos entre 50 e 5000
 
 			Gasto gasto = new Gasto(null, usuario, macroCategoria, subCategoria, valor, new Date());
 			gastoRepository.save(gasto);
