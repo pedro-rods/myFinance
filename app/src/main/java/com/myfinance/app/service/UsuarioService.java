@@ -6,6 +6,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.myfinance.app.entitiy.Usuario;
@@ -33,6 +34,9 @@ public class UsuarioService {
 	@Autowired
 	private UsuarioMapper mapper;
 
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+
 	public UsuarioResponse buscarPorid(Long id) {
 		return mapper.toUsuarioResponse(repository.findById(id).orElse(null));
 	}
@@ -52,8 +56,11 @@ public class UsuarioService {
 
 	public void cadastrar(@Valid UsuarioCadastroRequest request) {
 		Usuario usuario = mapper.toUsuarioEntity(request);
+
 		Usuario obj = buscarPorEmail(usuario.getEmail());
 		if (obj == null) {
+			// criptograr senha
+			usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
 			repository.save(usuario);
 		} else {
 			throw new RunTimeExceptionHandler("Email já cadastrado");

@@ -1,6 +1,7 @@
 package com.myfinance.app.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.myfinance.app.entitiy.Usuario;
@@ -24,9 +25,12 @@ public class LoginService {
 	@Autowired
 	private UsuarioMapper mapper;
 
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+
 	public UsuarioResponse login(LoginRequest login) {
-		Usuario usuario = repository.login(login.getEmail(), login.getSenha());
-		if (usuario == null) {
+		Usuario usuario = repository.buscarPorEmail(login.getEmail());
+		if (usuario == null || !passwordEncoder.matches(login.getSenha(), usuario.getSenha())) {
 			throw new RunTimeExceptionHandler("Email ou senha incorretos");
 		}
 		return mapper.toUsuarioResponse(usuario);

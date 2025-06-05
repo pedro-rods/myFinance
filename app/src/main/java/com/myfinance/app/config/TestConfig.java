@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.myfinance.app.entitiy.Gasto;
 import com.myfinance.app.entitiy.Usuario;
@@ -26,6 +27,9 @@ public class TestConfig implements CommandLineRunner {
 	@Autowired
 	private GastoRepository gastoRepository;
 
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+
 	private Random random = new Random();
 
 	private static final List<String> NECESSIDADES = Arrays.asList("aluguel", "condominio", "conta de agua",
@@ -42,9 +46,10 @@ public class TestConfig implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		System.out.println("rodando");
-		Usuario user1 = new Usuario(null, "Alice", "alice@email.com", "123", 8000.0);
-		Usuario user2 = new Usuario(null, "Bruno", "bruno@email.com", "123", 6000.0);
-		Usuario user3 = new Usuario(null, "Carla", "carla@email.com", "123", 7000.0);
+		String senhaPadrao = passwordEncoder.encode("123");
+		Usuario user1 = new Usuario(null, "Alice", "alice@email.com", senhaPadrao, 8000.0);
+		Usuario user2 = new Usuario(null, "Bruno", "bruno@email.com", senhaPadrao, 6000.0);
+		Usuario user3 = new Usuario(null, "Carla", "carla@email.com", senhaPadrao, 7000.0);
 
 		user1 = usuarioRepository.save(user1);
 		user2 = usuarioRepository.save(user2);
