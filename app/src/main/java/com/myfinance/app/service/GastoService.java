@@ -1,5 +1,7 @@
 package com.myfinance.app.service;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.BeanUtils;
@@ -34,15 +36,27 @@ public class GastoService {
 	@Autowired
 	private UsuarioService usuarioService;
 
-	public GastosListaResponse buscarGastosPorUsuario(Long idUsuario) {
+	public GastosListaResponse buscarGastosPorUsuario(Long idUsuario, Date dataInicio, Date dataFim) {
+
+		if (dataFim == null) {
+			dataFim = new Date();
+		}
+		// Se dataLimite for nulo, define como 30 dias atrás
+		if (dataInicio == null) {
+			Calendar cal = Calendar.getInstance();
+			cal.add(Calendar.DAY_OF_MONTH, -30);
+			dataInicio = cal.getTime();
+		}
+
 		GastosListaResponse lista = new GastosListaResponse();
 		Usuario usuario = usuarioService.buscarPorIdOuErro(idUsuario);
 		lista.setRenda(usuario.getRenda());
 		lista.setIdUsuario(idUsuario);
-		lista.setNecessidades(repository.findTotalBySubcategoria(idUsuario, EnumTipoCategoria.NECESSIDADES));
-		lista.setDesejos(repository.findTotalBySubcategoria(idUsuario, EnumTipoCategoria.DESEJOS));
-		lista.setInvestimento_e_poupanca(
-				repository.findTotalBySubcategoria(idUsuario, EnumTipoCategoria.INVESTIMENTO_E_POUPANCA));
+		lista.setNecessidades(
+				repository.findTotalBySubcategoria(idUsuario, EnumTipoCategoria.NECESSIDADES, dataInicio, dataFim));
+		lista.setDesejos(repository.findTotalBySubcategoria(idUsuario, EnumTipoCategoria.DESEJOS, dataInicio, dataFim));
+		lista.setInvestimento_e_poupanca(repository.findTotalBySubcategoria(idUsuario,
+				EnumTipoCategoria.INVESTIMENTO_E_POUPANCA, dataInicio, dataFim));
 		return lista;
 
 	}
@@ -80,23 +94,36 @@ public class GastoService {
 		repository.save(gasto);
 	}
 
-	public List<GastoResponse> buscarPorFiltro(Long idUsuario, String valor, EnumTipoCategoria categoria) {
+	public List<GastoResponse> buscarPorFiltro(Long idUsuario, String valor, EnumTipoCategoria categoria,
+			Date dataInicio, Date dataFim) {
+		if (dataFim == null) {
+			dataFim = new Date();
+		}
+
+		// Se dataLimite for nulo, define como 30 dias atrás
+		if (dataInicio == null) {
+			Calendar cal = Calendar.getInstance();
+			cal.add(Calendar.DAY_OF_MONTH, -30);
+			dataInicio = cal.getTime();
+		}
 		if (categoria == null && valor != null && !valor.isBlank()) {
 			log.info("entrou no sem cat");
-			return mapper.toListGastosResponse(repository.buscarPorValor(idUsuario, valor));
+			return mapper.toListGastosResponse(repository.buscarPorValor(idUsuario, valor, dataInicio, dataFim));
 		}
 
 		if (categoria != null && (valor == null || valor.isBlank())) {
-			return mapper.toListGastosResponse(repository.buscarPorCategoria(idUsuario, categoria));
+			return mapper
+					.toListGastosResponse(repository.buscarPorCategoria(idUsuario, categoria, dataInicio, dataFim));
 		}
 
 		if (categoria != null && valor != null) {
 
 			log.info("entrou no com cat");
-			return mapper.toListGastosResponse(repository.buscarPorValorECategoria(idUsuario, valor, categoria));
+			return mapper.toListGastosResponse(
+					repository.buscarPorValorECategoria(idUsuario, valor, categoria, dataInicio, dataFim));
 
 		}
-		return mapper.toListGastosResponse(repository.buscarPorUsuario(idUsuario));
+		return mapper.toListGastosResponse(repository.buscarPorUsuario(idUsuario, dataInicio, dataFim));
 
 	}
 

@@ -1,5 +1,6 @@
 package com.myfinance.app.repository;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,22 +18,30 @@ public interface GastoRepository extends JpaRepository<Gasto, Long> {
 	List<Gasto> buscarPorUsuarioETipo(Long id, String categoria);
 
 	@Query("SELECT new com.myfinance.app.response.GastosAgrupadosResponse(g.subcategoria, SUM(g.valor)) FROM Gasto g "
-			+ "WHERE usuario.id = :id AND categoria = :categoria GROUP BY g.subcategoria")
-	List<GastosAgrupadosResponse> findTotalBySubcategoria(Long id, EnumTipoCategoria categoria);
+			+ "WHERE usuario.id = :id AND categoria = :categoria AND dataHora BETWEEN :dataInicio AND :dataFim GROUP BY g.subcategoria")
+	List<GastosAgrupadosResponse> findTotalBySubcategoria(Long id, EnumTipoCategoria categoria, Date dataInicio,
+			Date dataFim);
 
 	@Query("SELECT g.id FROM Gasto g WHERE usuario.id = :id")
 	List<Long> buscarIDdeGastosPorUsuario(Long id);
 
-	@Query("FROM Gasto WHERE usuario.id = :idUsuario AND LOWER(subcategoria) LIKE LOWER(CONCAT('%', :valor, '%')) ORDER BY dataHora DESC, valor DESC")
-	List<Gasto> buscarPorValor(Long idUsuario, String valor);
+	@Query(" FROM Gasto	WHERE usuario.id=:idUsuario " + "AND (:valor IS NULL "
+			+ "OR LOWER(subcategoria) LIKE LOWER(CONCAT('%', :valor, '%'))) "
+			+ "AND dataHora BETWEEN :dataInicio AND :dataFim  " + "ORDER BY dataHora DESC, valor DESC")
 
-	@Query("FROM Gasto WHERE usuario.id = :idUsuario AND LOWER(subcategoria) LIKE LOWER(CONCAT('%', :valor, '%')) AND categoria = :categoria ORDER BY dataHora DESC, valor DESC")
-	List<Gasto> buscarPorValorECategoria(Long idUsuario, String valor, EnumTipoCategoria categoria);
+	List<Gasto> buscarPorValor(Long idUsuario, String valor, Date dataInicio, Date dataFim);
 
-	@Query("FROM Gasto WHERE usuario.id = :idUsuario AND categoria = :categoria ORDER BY dataHora DESC, valor DESC")
-	List<Gasto> buscarPorCategoria(Long idUsuario, EnumTipoCategoria categoria);
+	@Query("FROM Gasto WHERE usuario.id = :idUsuario AND LOWER(subcategoria) LIKE LOWER(CONCAT('%', :valor, '%')) AND categoria = :categoria "
+			+ "AND dataHora BETWEEN :dataInicio AND :dataFim ORDER BY dataHora DESC, valor DESC")
+	List<Gasto> buscarPorValorECategoria(Long idUsuario, String valor, EnumTipoCategoria categoria, Date dataInicio,
+			Date dataFim);
 
-	@Query("FROM Gasto WHERE usuario.id = :idUsuario ORDER BY dataHora DESC, valor DESC")
-	List<Gasto> buscarPorUsuario(Long idUsuario);
+	@Query("FROM Gasto WHERE usuario.id = :idUsuario AND categoria = :categoria "
+			+ "AND dataHora BETWEEN :dataInicio AND :dataFim ORDER BY dataHora DESC, valor DESC")
+	List<Gasto> buscarPorCategoria(Long idUsuario, EnumTipoCategoria categoria, Date dataInicio, Date dataFim);
+
+	@Query("FROM Gasto WHERE usuario.id = :idUsuario "
+			+ "AND dataHora BETWEEN :dataInicio AND :dataFim ORDER BY dataHora DESC, valor DESC")
+	List<Gasto> buscarPorUsuario(Long idUsuario, Date dataInicio, Date dataFim);
 
 }

@@ -1,6 +1,7 @@
 package com.myfinance.app.service;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -58,8 +59,17 @@ public class PlanoService {
 		return mapper.toResponse(repository.buscarporUsuario(id));
 	}
 
-	public PlanoResponse gerarPlano(Long id, Double valorPraPoupar) {
+	public PlanoResponse gerarPlano(Long id, Double valorPraPoupar, Date dataInicial, Date dataFinal) {
+		if (dataFinal == null) {
+			dataFinal = new Date();
+		}
 
+		// Se dataLimite for nulo, define como 30 dias atrás
+		if (dataInicial == null) {
+			Calendar cal = Calendar.getInstance();
+			cal.add(Calendar.DAY_OF_MONTH, -30);
+			dataInicial = cal.getTime();
+		}
 		Boolean flagValorPraPoupar = false;
 		// Buscar usuario
 		Usuario user = usuarioService.buscarPorIdOuErro(id);
@@ -72,7 +82,7 @@ public class PlanoService {
 		}
 
 		// buscar gastos por usuario
-		GastosListaResponse listaGastos = gastoService.buscarGastosPorUsuario(id);
+		GastosListaResponse listaGastos = gastoService.buscarGastosPorUsuario(id, dataInicial, dataFinal);
 
 		if (flagValorPraPoupar) {
 			listaGastos.setRenda((listaGastos.getRenda() - (valorPraPoupar + 10))); // fator de correção

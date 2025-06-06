@@ -1,8 +1,10 @@
 package com.myfinance.app.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,9 +37,12 @@ public class PlanoController {
 	@PostMapping(value = "")
 	@Operation(summary = "gerar plano")
 	public ResponseEntity<PlanoResponse> gerarPlano(@RequestParam Long idUsuario,
-			@RequestParam(required = false) Double valorPraPoupar) {
+			@RequestParam(required = false) Double valorPraPoupar,
+			@RequestParam(required = false) @DateTimeFormat(pattern = "dd/MM/yyyy") Date dataInicial,
+			@RequestParam(required = false) @DateTimeFormat(pattern = "dd/MM/yyyy") Date dataFinal) {
 
-		return new ResponseEntity<>(service.gerarPlano(idUsuario, valorPraPoupar), null, HttpStatus.OK);
+		return new ResponseEntity<>(service.gerarPlano(idUsuario, valorPraPoupar, dataInicial, dataFinal), null,
+				HttpStatus.OK);
 	}
 
 //	@PostMapping(value = "/treinar")

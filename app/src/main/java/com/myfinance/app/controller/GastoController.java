@@ -1,8 +1,10 @@
 package com.myfinance.app.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -36,9 +38,12 @@ public class GastoController {
 
 	@GetMapping(value = "/usuario")
 	@Operation(summary = "Buscar gastos por usuarios")
-	public ResponseEntity<GastosListaResponse> buscarPorUsuario(@RequestParam Long idUsuario) {
+	public ResponseEntity<GastosListaResponse> buscarPorUsuario(@RequestParam Long idUsuario,
+			@RequestParam(required = false) @DateTimeFormat(pattern = "dd/MM/yyyy") Date dataInicial,
+			@RequestParam(required = false) @DateTimeFormat(pattern = "dd/MM/yyyy") Date dataFinal) {
 
-		return new ResponseEntity<>(service.buscarGastosPorUsuario(idUsuario), null, HttpStatus.OK);
+		return new ResponseEntity<>(service.buscarGastosPorUsuario(idUsuario, dataInicial, dataFinal), null,
+				HttpStatus.OK);
 	}
 
 	@GetMapping(value = "/buscar/{id}")
@@ -46,13 +51,6 @@ public class GastoController {
 	public ResponseEntity<GastoResponse> buscarPorId(@PathVariable Long id) {
 		return new ResponseEntity<>(service.buscar(id), null, HttpStatus.OK);
 	}
-
-//	@GetMapping(value = "/usuario/all")
-//	@Operation(summary = "Buscar todos gastos por usuarios")
-//	public ResponseEntity<List<GastoResponse>> buscarTodosPorUsuario(@RequestParam Long idUsuario) {
-//
-//		return new ResponseEntity<>(service.buscarTodos(), null, HttpStatus.OK);
-//	}
 
 	@PostMapping(value = "/cadastrar")
 	@Operation(summary = "Cadastrar gasto")
@@ -82,7 +80,9 @@ public class GastoController {
 	@GetMapping(value = "/buscar/categoria")
 	@Operation(summary = "buscar por valor. O parâmetro Valor (opcional) é a string da subcategoria. Categoria (também opcional) é autoexplicativo")
 	public List<GastoResponse> buscarPorFiltros(@RequestParam Long idUsuario,
-			@RequestParam(required = false) String valor, @RequestParam(required = false) EnumTipoCategoria categoria) {
-		return service.buscarPorFiltro(idUsuario, valor, categoria);
+			@RequestParam(required = false) String valor, @RequestParam(required = false) EnumTipoCategoria categoria,
+			@RequestParam(required = false) @DateTimeFormat(pattern = "dd/MM/yyyy") Date dataInicial,
+			@RequestParam(required = false) @DateTimeFormat(pattern = "dd/MM/yyyy") Date dataFinal) {
+		return service.buscarPorFiltro(idUsuario, valor, categoria, dataInicial, dataFinal);
 	}
 }
