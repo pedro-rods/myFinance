@@ -11,6 +11,6 @@ import com.myfinance.app.entitiy.PlanoFinanceiro;
 @Repository
 public interface PlanoRepository extends JpaRepository<PlanoFinanceiro, Long> {
 
-	@Query("SELECT p FROM PlanoFinanceiro p JOIN FETCH p.ajustes a WHERE p.usuario.id = :id ORDER BY a.categoria DESC")
+	@Query("SELECT p FROM PlanoFinanceiro p JOIN FETCH p.ajustes a WHERE p.usuario.id = :id ORDER BY p.id")
 	List<PlanoFinanceiro> buscarporUsuario(Long id);
 }
