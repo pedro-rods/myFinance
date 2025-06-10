@@ -21,6 +21,7 @@ import com.myfinance.app.entitiy.PlanoFinanceiro;
 import com.myfinance.app.entitiy.Risco;
 import com.myfinance.app.entitiy.Usuario;
 import com.myfinance.app.enums.EnumTipoCategoria;
+import com.myfinance.app.exception.RunTimeExceptionHandler;
 import com.myfinance.app.mapper.PlanoMapper;
 import com.myfinance.app.repository.PlanoRepository;
 import com.myfinance.app.response.GastosListaResponse;
@@ -69,6 +70,9 @@ public class PlanoService {
 			Calendar cal = Calendar.getInstance();
 			cal.add(Calendar.DAY_OF_MONTH, -30);
 			dataInicial = cal.getTime();
+		}
+		if (dataInicial.after(dataFinal)) {
+			throw new RunTimeExceptionHandler("Data final deve ser depois da data inicial");
 		}
 		Boolean flagValorPraPoupar = false;
 		// Buscar usuario

@@ -82,7 +82,7 @@ public class GastoController {
 	public List<GastoResponse> buscarPorFiltros(@RequestParam Long idUsuario,
 			@RequestParam(required = false) String valor, @RequestParam(required = false) EnumTipoCategoria categoria,
 			@RequestParam(required = false) @DateTimeFormat(pattern = "dd/MM/yyyy") Date dataInicial,
-			@RequestParam(required = false) @DateTimeFormat(pattern = "dd/MM/yyyy") Date dataFinal) {
-		return service.buscarPorFiltro(idUsuario, valor, categoria, dataInicial, dataFinal);
+			@RequestParam(required = false) @DateTimeFormat(pattern = "dd/MM/yyyy") Date dataFim) {
+		return service.buscarPorFiltro(idUsuario, valor, categoria, dataInicial, dataFim);
 	}
 }

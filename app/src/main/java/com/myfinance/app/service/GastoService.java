@@ -106,6 +106,9 @@ public class GastoService {
 			cal.add(Calendar.DAY_OF_MONTH, -30);
 			dataInicio = cal.getTime();
 		}
+		if (dataInicio.after(dataFim)) {
+			throw new RunTimeExceptionHandler("Data final deve ser depois da data inicial");
+		}
 		if (categoria == null && valor != null && !valor.isBlank()) {
 			log.info("entrou no sem cat");
 			return mapper.toListGastosResponse(repository.buscarPorValor(idUsuario, valor, dataInicio, dataFim));
