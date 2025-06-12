@@ -15,6 +15,7 @@ import com.myfinance.app.enums.EnumTipoCategoria;
 import com.myfinance.app.exception.RunTimeExceptionHandler;
 import com.myfinance.app.mapper.GastoMapper;
 import com.myfinance.app.repository.GastoRepository;
+import com.myfinance.app.request.DataHoraRequest;
 import com.myfinance.app.request.GastoRequest;
 import com.myfinance.app.response.GastoResponse;
 import com.myfinance.app.response.GastosListaResponse;
@@ -95,7 +96,14 @@ public class GastoService {
 	}
 
 	public List<GastoResponse> buscarPorFiltro(Long idUsuario, String valor, EnumTipoCategoria categoria,
-			Date dataInicio, Date dataFim) {
+			DataHoraRequest request) {
+		Date dataFim = null;
+		Date dataInicio = null;
+
+		if (request != null) {
+			dataInicio = request.getDataInicio();
+			dataFim = request.getDataFinal();
+		}
 		if (dataFim == null) {
 			dataFim = new Date();
 		}

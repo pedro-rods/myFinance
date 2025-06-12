@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.myfinance.app.enums.EnumTipoCategoria;
+import com.myfinance.app.request.DataHoraRequest;
 import com.myfinance.app.request.GastoRequest;
 import com.myfinance.app.response.GastoResponse;
 import com.myfinance.app.response.GastosListaResponse;
@@ -77,12 +78,11 @@ public class GastoController {
 		return new ResponseEntity<>(response, null, HttpStatus.OK);
 	}
 
-	@GetMapping(value = "/buscar/categoria")
+	@PostMapping(value = "/buscar/categoria")
 	@Operation(summary = "buscar por valor. O parâmetro Valor (opcional) é a string da subcategoria. Categoria (também opcional) é autoexplicativo")
 	public List<GastoResponse> buscarPorFiltros(@RequestParam Long idUsuario,
 			@RequestParam(required = false) String valor, @RequestParam(required = false) EnumTipoCategoria categoria,
-			@RequestParam(required = false) @DateTimeFormat(pattern = "dd/MM/yyyy") Date dataInicial,
-			@RequestParam(required = false) @DateTimeFormat(pattern = "dd/MM/yyyy") Date dataFim) {
-		return service.buscarPorFiltro(idUsuario, valor, categoria, dataInicial, dataFim);
+			@RequestBody DataHoraRequest request) {
+		return service.buscarPorFiltro(idUsuario, valor, categoria, request);
 	}
 }
