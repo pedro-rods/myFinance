@@ -1,5 +1,7 @@
 package com.myfinance.app.config;
 
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -68,7 +70,7 @@ public class TestConfig implements CommandLineRunner {
 			EnumTipoCategoria macroCategoria = escolherMacroCategoria();
 			String subCategoria = escolherSubCategoria(macroCategoria);
 			double valor = 50 + (3000 * random.nextDouble()); // Gastos entre 50 e 3000
-			
+
 			Date dataAleatoria = gerarDataAleatoriaUltimos30Dias();
 			Gasto gasto = new Gasto(null, usuario, macroCategoria, subCategoria, valor, dataAleatoria);
 			gastoRepository.save(gasto);
@@ -104,10 +106,16 @@ public class TestConfig implements CommandLineRunner {
 	}
 
 	private Date gerarDataAleatoriaUltimos30Dias() {
-		long millisHoje = System.currentTimeMillis();
-		long millis30DiasAtras = millisHoje - (30L * 24 * 60 * 60 * 1000); // 30 dias em milissegundos
-		long millisAleatorio = millis30DiasAtras + (long) (random.nextDouble() * (millisHoje - millis30DiasAtras));
-		return new Date(millisAleatorio);
+		ZoneId zoneId = ZoneId.of("America/Sao_Paulo");
+		ZonedDateTime agora = ZonedDateTime.now(zoneId);
+		ZonedDateTime trintaDiasAtras = agora.minusDays(30);
+
+		long segundosAleatorios = (long) (random.nextDouble()
+				* (agora.toEpochSecond() - trintaDiasAtras.toEpochSecond()));
+		ZonedDateTime dataAleatoria = trintaDiasAtras.plusSeconds(segundosAleatorios);
+
+		// Convertendo para java.util.Date (caso o seu Gasto ainda use Date)
+		return Date.from(dataAleatoria.toInstant());
 	}
 
 }

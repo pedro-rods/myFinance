@@ -19,6 +19,7 @@ import com.myfinance.app.request.DataHoraRequest;
 import com.myfinance.app.request.GastoRequest;
 import com.myfinance.app.response.GastoResponse;
 import com.myfinance.app.response.GastosListaResponse;
+import com.myfinance.app.util.DataUtils;
 
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
@@ -39,8 +40,11 @@ public class GastoService {
 
 	public GastosListaResponse buscarGastosPorUsuario(Long idUsuario, Date dataInicio, Date dataFim) {
 
+		// Se dataFim for nulo, define como agora
 		if (dataFim == null) {
 			dataFim = new Date();
+		} else {
+			dataFim = DataUtils.colocarNoFimDoDia(dataFim);
 		}
 		// Se dataLimite for nulo, define como 30 dias atrás
 		if (dataInicio == null) {
@@ -104,8 +108,18 @@ public class GastoService {
 			dataInicio = request.getDataInicio();
 			dataFim = request.getDataFinal();
 		}
+		// Se dataFim for nulo, define como agora
 		if (dataFim == null) {
 			dataFim = new Date();
+		} else {
+			// Ajusta dataFim para o final do dia (23:59:59.999)
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(dataFim);
+			cal.set(Calendar.HOUR_OF_DAY, 23);
+			cal.set(Calendar.MINUTE, 59);
+			cal.set(Calendar.SECOND, 59);
+			cal.set(Calendar.MILLISECOND, 999);
+			dataFim = cal.getTime();
 		}
 
 		// Se dataLimite for nulo, define como 30 dias atrás

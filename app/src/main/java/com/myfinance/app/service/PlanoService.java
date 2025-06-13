@@ -26,6 +26,7 @@ import com.myfinance.app.mapper.PlanoMapper;
 import com.myfinance.app.repository.PlanoRepository;
 import com.myfinance.app.response.GastosListaResponse;
 import com.myfinance.app.response.PlanoResponse;
+import com.myfinance.app.util.DataUtils;
 
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
@@ -61,8 +62,11 @@ public class PlanoService {
 	}
 
 	public PlanoResponse gerarPlano(Long id, Double valorPraPoupar, Date dataInicial, Date dataFinal) {
+		// Se dataFim for nulo, define como agora
 		if (dataFinal == null) {
 			dataFinal = new Date();
+		} else {
+			dataFinal = DataUtils.colocarNoFimDoDia(dataFinal);
 		}
 
 		// Se dataLimite for nulo, define como 30 dias atrás
