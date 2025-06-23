@@ -73,7 +73,7 @@ A aplicação possui três páginas principais:
 
 1. Clone este repositório:
    ```bash
-   git clone https://github.com/seu-usuario/myfinance.git
+   git clone https://github.com/pedro-rods/myfinance.git
 ````
 
 2. Instale as dependências do backend:
