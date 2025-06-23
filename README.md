@@ -1,5 +1,4 @@
 
-````markdown
 # 💸 MyFinance
 
 > Plataforma Inteligente para Gerenciamento Financeiro Pessoal
