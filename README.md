@@ -125,9 +125,3 @@ Centro Universitário de Brasília – CEUB
 ## 📅 Conclusão
 
 MyFinance busca consolidar-se como uma ferramenta prática e educativa, capacitando o usuário a tomar decisões financeiras mais inteligentes, autônomas e sustentáveis.
-
----
-
-```
-
-```
