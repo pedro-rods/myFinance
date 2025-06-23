@@ -5,6 +5,8 @@
 
 MyFinance é uma aplicação web desenvolvida como Trabalho de Conclusão de Curso (TCC) com o objetivo de auxiliar usuários na gestão de suas finanças pessoais por meio de recursos de inteligência artificial e da aplicação do modelo financeiro 50/30/20. A plataforma foca na privacidade do usuário, não exigindo conexão com contas bancárias, e oferece recomendações personalizadas para o planejamento financeiro.
 
+Este projeto é apenas a parte do backend da aplicação feito em Springboot.
+
 ---
 
 ## 🚀 Tecnologias Utilizadas
@@ -74,25 +76,12 @@ A aplicação possui três páginas principais:
    git clone https://github.com/seu-usuario/myfinance.git
 ````
 
-2. Instale as dependências do frontend e backend:
+2. Instale as dependências do backend:
 
-   * **Frontend (React):**
-
-     ```bash
-     cd frontend
-     npm install
-     npm start
-     ```
    * **Backend (Spring Boot):**
      Configure o banco de dados PostgreSQL no `application.properties` e rode a aplicação.
 
-3. API de IA (Flask):
-
-   ```bash
-   cd ai_service
-   pip install -r requirements.txt
-   python app.py
-   ```
+   Acesse a documentação automática da aplicação pelo Swagger: http://localhost:9087/swagger-ui/index.html#/
 
 ---
 
@@ -108,7 +97,7 @@ A aplicação possui três páginas principais:
 * Modelo 50/30/20 (WARREN; TYAGI, 2005)
 * Pressman & Maxim – Engenharia de Software
 * Financial Literacy Around the World (S\&P, 2014)
-* Dados IBGE/POF 2018 e médias salariais do G1
+* Médias salariais do G1
 
 ---
 
