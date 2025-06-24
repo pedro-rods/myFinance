@@ -24,6 +24,7 @@ import com.myfinance.app.enums.EnumTipoCategoria;
 import com.myfinance.app.exception.RunTimeExceptionHandler;
 import com.myfinance.app.mapper.PlanoMapper;
 import com.myfinance.app.repository.PlanoRepository;
+import com.myfinance.app.response.GastosAgrupadosResponse;
 import com.myfinance.app.response.GastosListaResponse;
 import com.myfinance.app.response.PlanoResponse;
 import com.myfinance.app.util.DataUtils;
@@ -92,6 +93,12 @@ public class PlanoService {
 		// buscar gastos por usuario
 		GastosListaResponse listaGastos = gastoService.buscarGastosPorUsuario(id, dataInicial, dataFinal);
 
+		if (listaGastos.getInvestimento_e_poupanca().size() == 0 || listaGastos.getInvestimento_e_poupanca().isEmpty()) {
+			GastosAgrupadosResponse investimentoObrigatorio = new GastosAgrupadosResponse();
+			investimentoObrigatorio.setSubcategoria("investimento obrigatório");
+			investimentoObrigatorio.setValor(0.0);
+			listaGastos.getInvestimento_e_poupanca().add(investimentoObrigatorio);
+		}
 		if (flagValorPraPoupar) {
 			listaGastos.setRenda((listaGastos.getRenda() - (valorPraPoupar + 10))); // fator de correção
 		}
@@ -221,7 +228,6 @@ public class PlanoService {
 
 			// Persiste o plano no banco de dados
 			plano = repository.save(plano);
-			System.out.println(plano.getValorTotalAjustes());
 			return this.mapper.toResponse(plano);
 
 		} catch (Exception e) {
