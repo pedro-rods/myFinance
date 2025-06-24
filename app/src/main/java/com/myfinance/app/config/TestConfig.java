@@ -63,19 +63,29 @@ public class TestConfig implements CommandLineRunner {
 	}
 
 	private void gerarGastosParaUsuario(Usuario usuario) {
-		// Cada usuário terá entre 10 e 20 gastos variados
-		int quantidadeGastos = random.nextInt(10) + 10;
+	    double salarioDisponivel = usuario.getRenda();
+	    double totalGastos = 0.0;
 
-		for (int i = 0; i < quantidadeGastos; i++) {
-			EnumTipoCategoria macroCategoria = escolherMacroCategoria();
-			String subCategoria = escolherSubCategoria(macroCategoria);
-			double valor = 50 + (3000 * random.nextDouble()); // Gastos entre 50 e 3000
+	    while (totalGastos < salarioDisponivel) {
+	        EnumTipoCategoria macroCategoria = escolherMacroCategoria();
+	        String subCategoria = escolherSubCategoria(macroCategoria);
 
-			Date dataAleatoria = gerarDataAleatoriaUltimos30Dias();
-			Gasto gasto = new Gasto(null, usuario, macroCategoria, subCategoria, valor, dataAleatoria);
-			gastoRepository.save(gasto);
-		}
+	        // Valor do gasto entre 50 e o restante do salário disponível (ou no máximo 3000)
+	        double maxGasto = Math.min(3000.0, salarioDisponivel - totalGastos);
+	        if (maxGasto < 50) {
+	            break; // Não vale a pena gerar gastos abaixo de 50
+	        }
+
+	        double valor = 50 + (random.nextDouble() * (maxGasto - 50));
+
+	        Date dataAleatoria = gerarDataAleatoriaUltimos30Dias();
+	        Gasto gasto = new Gasto(null, usuario, macroCategoria, subCategoria, valor, dataAleatoria);
+	        gastoRepository.save(gasto);
+
+	        totalGastos += valor;
+	    }
 	}
+
 
 	private EnumTipoCategoria escolherMacroCategoria() {
 		int pick = random.nextInt(3);
