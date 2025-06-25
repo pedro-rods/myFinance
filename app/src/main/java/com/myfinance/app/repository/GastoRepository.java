@@ -22,6 +22,9 @@ public interface GastoRepository extends JpaRepository<Gasto, Long> {
 	List<GastosAgrupadosResponse> findTotalBySubcategoria(Long id, EnumTipoCategoria categoria, Date dataInicio,
 			Date dataFim);
 
+	@Query("SELECT SUM(g.valor) FROM Gasto g WHERE g.usuario.id = :usuarioId")
+	Double somarGastosPorUsuario(Long usuarioId);
+
 	@Query("SELECT g.id FROM Gasto g WHERE usuario.id = :id")
 	List<Long> buscarIDdeGastosPorUsuario(Long id);
 

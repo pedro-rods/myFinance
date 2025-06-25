@@ -62,6 +62,7 @@ public class GastoService {
 		lista.setDesejos(repository.findTotalBySubcategoria(idUsuario, EnumTipoCategoria.DESEJOS, dataInicio, dataFim));
 		lista.setInvestimento_e_poupanca(repository.findTotalBySubcategoria(idUsuario,
 				EnumTipoCategoria.INVESTIMENTO_E_POUPANCA, dataInicio, dataFim));
+		System.out.println(repository.somarGastosPorUsuario(idUsuario));
 		return lista;
 
 	}
