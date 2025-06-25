@@ -63,6 +63,12 @@ public class PlanoService {
 	}
 
 	public PlanoResponse gerarPlano(Long id, Double valorPraPoupar, Date dataInicial, Date dataFinal) {
+
+		Usuario usuario = usuarioService.buscarPorIdOuErro(id);
+		if (usuario.getRenda() == null || usuario.getRenda() <= 0) {
+			throw new RunTimeExceptionHandler("Usuario não possui renda");
+		}
+
 		// Se dataFim for nulo, define como agora
 		if (dataFinal == null) {
 			dataFinal = new Date();
@@ -93,7 +99,8 @@ public class PlanoService {
 		// buscar gastos por usuario
 		GastosListaResponse listaGastos = gastoService.buscarGastosPorUsuario(id, dataInicial, dataFinal);
 
-		if (listaGastos.getInvestimento_e_poupanca().size() == 0 || listaGastos.getInvestimento_e_poupanca().isEmpty()) {
+		if (listaGastos.getInvestimento_e_poupanca().size() == 0
+				|| listaGastos.getInvestimento_e_poupanca().isEmpty()) {
 			GastosAgrupadosResponse investimentoObrigatorio = new GastosAgrupadosResponse();
 			investimentoObrigatorio.setSubcategoria("investimento obrigatório");
 			investimentoObrigatorio.setValor(0.0);
