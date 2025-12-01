@@ -35,7 +35,7 @@ import jakarta.validation.Valid;
 public class GastoController {
 
 	@Autowired
-	private GastoService service;
+	private GastoService service; // teste
 
 	@GetMapping(value = "/usuario")
 	@Operation(summary = "Buscar gastos por usuarios")
